@@ -1,6 +1,7 @@
 from transitions import Transitions
 
 class NFA:
+	"""Setting a NFA model"""
 	def __init__(self):
 		self.vertex = []
 		self.transitions = []
