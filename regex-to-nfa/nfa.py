@@ -29,16 +29,3 @@ class NFA:
 				str(self.transitions[i].vertex_to) + ' : Symbol - ' + self.transitions[i].trans_symbol)
 
 		print('\nThe final state is q' + str(self.get_final_state()) + '\n')
-
-
-
-
-
-
-# nfa = NFA()
-# nfa.set_transition(1, 2, 'e')
-# nfa.set_final_state(10)
-# nfa.display()
-# nfa.set_vertex(3)
-# print(nfa.get_vertex_count())
-# print(nfa.vertex)
