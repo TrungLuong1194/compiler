@@ -73,7 +73,7 @@ def union(nfa1, nfa2):
 
 	result.set_transition(
 		0, 
-		nfa2.transitions[i].vertex_from + nfa1.get_vertex_count() + 1, 
+		nfa1.get_vertex_count() + 1,
 		'eps')
 
 	for i in range(len(nfa2.transitions)):
