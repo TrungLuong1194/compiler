@@ -1,5 +1,5 @@
 from nfa import NFA
-from re_to_nfa import RE_TO_NFA
+from re_to_nfas import Re_To_NFAs
 import rule
 
 print("Thompson's Algorithm")
@@ -40,7 +40,7 @@ print('----------------------------------------------------\n')
 
 print('Regular expression segment: (a.(b|c))')
 regex = '(a.(b|c))'
-regex_tranform = RE_TO_NFA(regex)
+regex_tranform = Re_To_NFAs(regex)
 regex_tranform.matcher()
 regex_tranform.get_tranform().display()
 
@@ -51,6 +51,6 @@ while True:
 
 	print('----------------------------------------------------\n')
 	print('The required NFA has the transitions:')
-	regex_tranform = RE_TO_NFA(regex)
+	regex_tranform = Re_To_NFAs(regex)
 	regex_tranform.matcher()
 	regex_tranform.get_tranform().display()
