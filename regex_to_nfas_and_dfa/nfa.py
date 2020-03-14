@@ -25,7 +25,7 @@ class NFA:
 		return self.final_state
 
 	def get_vertex_to(self, vertex_from, trans_symbol):
-		vertex_to = 'O'
+		vertex_to = 'empty'
 		for i in range(len(self.transitions)):
 			if self.transitions[i].vertex_from == vertex_from and self.transitions[i].trans_symbol == trans_symbol:
 				vertex_to = self.transitions[i].vertex_to
@@ -34,7 +34,6 @@ class NFA:
 
 	def display(self):
 		for i in range(len(self.transitions)):
-			print('q' + str(self.transitions[i].vertex_from) + ' ---> q' + 
-				str(self.transitions[i].vertex_to) + ' : Symbol - ' + self.transitions[i].trans_symbol)
+			print('q' + str(self.transitions[i].vertex_from) + '------ ' + self.transitions[i].trans_symbol + ' ------> q' + str(self.transitions[i].vertex_to))
 
 		print('\nThe final state is q' + str(self.get_final_state()) + '\n')

@@ -1,5 +1,4 @@
 from transitions_closures import TransitionsClosures as Trans
-from re_to_nfas import Re_To_NFAs
 import function
 
 class EpsilonClosures:
@@ -37,28 +36,3 @@ class EpsilonClosures:
 
 	def get_epsilon(self, index):
 		return self.operands[index].getClosure()
-
-
-
-
-
-
-# # regex = '((a*|b).c*)'
-# regex = '(a*|b)'
-# regex_tranform = Re_To_NFAs(regex)
-# regex_tranform.matcher()
-# nfa = regex_tranform.get_tranform()
-
-# # print(len(nfa.transitions))
-
-# # print(regex_tranform.get_tranform().transitions[4].trans_symbol)
-
-# eli = EpsilonClosures(nfa)
-# eli.transform()
-# eli.optimize()
-# for i in range(len(eli.operands)):
-# 	eli.operands[i].display()
-
-# print(eli.getOperators())
-# print(eli.get_epsilon(1))
-
