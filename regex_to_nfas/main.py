@@ -29,8 +29,12 @@ rule.concat(a, b).display()
 
 print('----------------------------------------------------\n')
 
+no_of_selections = 2
+selections = []
+selections.append(a)
+selections.append(b)
 print('Regular expression segment: (a|b)')
-rule.union(a, b).display()
+rule.union(selections, no_of_selections).display()
 
 print('----------------------------------------------------\n')
 
