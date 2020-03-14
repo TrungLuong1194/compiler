@@ -22,6 +22,9 @@ class NFAs_To_NFA:
 				
 				listClosures = sorted(self.epsilonClosures.operands[indexStart].getClosure())
 
+				if self.nfa.get_final_state() in listClosures and indexStart not in final_state:
+					final_state.append(indexStart)
+
 				listClosuresIn = []
 				for indexClosure in range(len(listClosures)):
 					if self.nfa.get_vertex_to(listClosures[indexClosure], trans_symbol) != 'empty':
@@ -35,11 +38,9 @@ class NFAs_To_NFA:
 				for i in range(len(listTmp)):
 					function.unionList(vertex_to, listTmp[i])
 
-				tmp.set_transition(vertex_from, vertex_to, trans_symbol)
-
-				for i in range(len(vertex_to)):
-					if self.nfa.get_final_state() in vertex_to and vertex_to not in final_state:
-						final_state.append(vertex_to)
+				if len(vertex_to) > 0:
+					for i in range(len(vertex_to)):
+						tmp.set_transition(vertex_from, vertex_to[i], trans_symbol)
 
 		tmp.set_final_state(final_state)
 
