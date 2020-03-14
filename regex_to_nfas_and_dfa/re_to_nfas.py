@@ -1,10 +1,10 @@
 from nfa import NFA
 import rule
 
-class RE_TO_NFA:
+class Re_To_NFAs:
 	"""
 	Transforming a regular expression into an 
-	equivalent nondeterministic finite automaton (NFA)
+	equivalent nondeterministic finite automaton - with epsilon (NFAs)
 	"""
 	def __init__(self, regex):
 		self.regex = regex
@@ -38,10 +38,13 @@ class RE_TO_NFA:
 						op1 = self.operands.pop()
 						self.operands.append(rule.concat(op1, op2))
 				else:
-					for i in range(op_count):
-						op2 = self.operands.pop()
-						op1 = self.operands.pop()
-						self.operands.append(rule.union(op1, op2))
+					selections = [0] * (op_count + 1)
+					tracker = op_count
+					for i in range(op_count + 1):
+						selections[tracker] = self.operands.pop()
+						tracker -= 1
+					self.operands.append(rule.union(selections, op_count + 1))
+
 			else:
 				tmp = NFA()
 				tmp.set_vertex(2)
