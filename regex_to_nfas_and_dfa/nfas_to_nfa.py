@@ -3,14 +3,13 @@ from nfa import NFA
 
 class NFAs_To_NFA:
 	"""Transform NFAs to NFA"""
-	def __init__(self, epsilonClosures, nfa):
+	def __init__(self, epsilonClosures, nfas):
 		self.epsilonClosures = epsilonClosures
-		self.nfa = nfa
+		self.nfas = nfas
 		self.operands = []
 
 	def transform(self):
 		tmp = NFA()
-		tmp.set_vertex(2 * len(self.epsilonClosures.operands))
 		final_state = []
 		
 		for oper in range(len(self.epsilonClosures.getOperators())):
@@ -22,13 +21,13 @@ class NFAs_To_NFA:
 				
 				listClosures = sorted(self.epsilonClosures.operands[indexStart].getClosure())
 
-				if self.nfa.get_final_state() in listClosures and indexStart not in final_state:
+				if self.nfas.get_final_state() in listClosures and indexStart not in final_state:
 					final_state.append(indexStart)
 
 				listClosuresIn = []
 				for indexClosure in range(len(listClosures)):
-					if self.nfa.get_vertex_to(listClosures[indexClosure], trans_symbol) != 'empty':
-						listClosuresIn.append(self.nfa.get_vertex_to(listClosures[indexClosure], trans_symbol))
+					if self.nfas.get_vertex_to(listClosures[indexClosure], trans_symbol) != 'empty':
+						listClosuresIn.append(self.nfas.get_vertex_to(listClosures[indexClosure], trans_symbol))
 
 				listTmp = []
 				if len(listClosuresIn) > 0:
@@ -37,6 +36,9 @@ class NFAs_To_NFA:
 
 				for i in range(len(listTmp)):
 					function.unionList(vertex_to, listTmp[i])
+
+				# print('vertex_from: ' + str(vertex_from) + " - " + str(trans_symbol) + " - " + str(vertex_to))
+				# print('----------------------------------------------------------------')
 
 				if len(vertex_to) > 0:
 					for i in range(len(vertex_to)):

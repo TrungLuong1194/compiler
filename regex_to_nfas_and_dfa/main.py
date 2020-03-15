@@ -2,6 +2,7 @@ from nfa import NFA
 from re_to_nfas import Re_To_NFAs
 from epsilon_closures import EpsilonClosures
 from nfas_to_nfa import NFAs_To_NFA
+from nfa_to_dfa import NFA_To_DFA
 import rule
 
 # print("Thompson's Algorithm")
@@ -51,19 +52,28 @@ while True:
 	if regex == 'q':
 		break
 
-	print('The required NFAs (with epsilon) has the transitions:')
+	print('\nThe required NFAs (with epsilon) has the transitions:\n')
 	regex_tranform = Re_To_NFAs(regex)
 	regex_tranform.matcher()
 	regex_tranform.get_tranform().display()
 
 	print('----------------------------------------------------\n')
 
-	print('The required NFA (without epsilon) has the transitions:')
-	nfa = regex_tranform.get_tranform()
-	eps = EpsilonClosures(nfa)
+	print('The required NFA (without epsilon) has the transitions:\n')
+	nfas = regex_tranform.get_tranform()
+	eps = EpsilonClosures(nfas)
 	eps.transform()
 	eps.optimize()
 
-	nfas_tranform = NFAs_To_NFA(eps, nfa)
+	nfas_tranform = NFAs_To_NFA(eps, nfas)
 	nfas_tranform.transform()
 	nfas_tranform.get_tranform().display()
+
+	print('----------------------------------------------------\n')
+
+	print('The required DFA has the transitions:\n')
+
+	nfa = nfas_tranform.get_tranform()
+	nfa_tranform = NFA_To_DFA(nfa, eps)
+	nfa_tranform.transform()
+	nfa_tranform.get_tranform().display()

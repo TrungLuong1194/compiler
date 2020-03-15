@@ -32,6 +32,26 @@ class NFA:
 
 		return vertex_to
 
+	def get_list_vertex_to(self, vertex_from, trans_symbol):
+		list_vertex_to = []
+
+		for index in range(len(self.transitions)):
+			if self.transitions[index].vertex_from == vertex_from and self.transitions[index].trans_symbol == trans_symbol:
+				list_vertex_to.append(self.transitions[index].vertex_to)
+
+		return list_vertex_to
+
+
+	# def get_list_vertex_to(self, list_vertex_from, trans_symbol):
+	# 	list_vertex_to = []
+
+	# 	for i in range(len(list_vertex_from)):
+	# 		for index in range(len(self.transitions)):
+	# 			if self.transitions[index].vertex_from == list_vertex_from[i] and self.transitions[index].trans_symbol == trans_symbol:
+	# 				list_vertex_to.append(self.transitions[index].vertex_to)
+
+	# 	return list_vertex_to
+
 	def display(self):
 		for i in range(len(self.transitions)):
 			print('q' + str(self.transitions[i].vertex_from) + '------ ' + self.transitions[i].trans_symbol + ' ------> q' + str(self.transitions[i].vertex_to))
