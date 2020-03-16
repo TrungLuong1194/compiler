@@ -1,4 +1,5 @@
 from nfa import NFA
+import function
 
 class NFA_To_DFA:
 	"""Transform NFA to DFA"""
@@ -26,8 +27,9 @@ class NFA_To_DFA:
 			for oper in range(len(self.epsilonClosures.getOperators())):
 				trans_symbol = self.epsilonClosures.getOperators()[oper]
 
+				list_vertex_to = []
 				for i in range(len(tmp_vertex)):
-					list_vertex_to = self.nfa.get_list_vertex_to(tmp_vertex[i], trans_symbol)
+					function.unionList(list_vertex_to, self.nfa.get_list_vertex_to(tmp_vertex[i], trans_symbol))
 
 				if len(list_vertex_to) > 0:
 					tmp.set_transition(tmp_vertex, list_vertex_to, trans_symbol)
