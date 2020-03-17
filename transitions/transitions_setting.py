@@ -1,13 +1,14 @@
-from regex_to_nfas.transitions_nfa import TransitionsNFA
+from transitions.transition import Transition
 
 
-class NFA:
-    """Setting a NFAs model"""
+class TransitionsSetting:
+    """Setting a transition model"""
 
     def __init__(self):
         self.vertex = []
         self.transitions = []
         self.final_state = 0
+        self.operators = []
 
     def get_vertex_count(self):
         return len(self.vertex)
@@ -17,7 +18,7 @@ class NFA:
             self.vertex.append(i)
 
     def set_transition(self, vertex_from, vertex_to, trans_symbol):
-        trans = TransitionsNFA(vertex_from, vertex_to, trans_symbol)
+        trans = Transition(vertex_from, vertex_to, trans_symbol)
         self.transitions.append(trans)
 
     def set_final_state(self, final_state):
@@ -25,6 +26,13 @@ class NFA:
 
     def get_final_state(self):
         return self.final_state
+
+    def get_operators(self):
+        for i in range(len(self.transitions)):
+            if self.transitions[i].trans_symbol != 'eps' and self.transitions[i].trans_symbol not in self.operators:
+                self.operators.append(self.transitions[i].trans_symbol)
+
+        return self.operators
 
     def get_vertex_to(self, vertex_from, trans_symbol):
         vertex_to = 'empty'
@@ -43,16 +51,6 @@ class NFA:
                 list_vertex_to.append(self.transitions[index].vertex_to)
 
         return list_vertex_to
-
-    # def get_list_vertex_to(self, list_vertex_from, trans_symbol):
-    # 	list_vertex_to = []
-
-    # 	for i in range(len(list_vertex_from)):
-    # 		for index in range(len(self.transitions)):
-    # 			if self.transitions[index].vertex_from == list_vertex_from[i] and self.transitions[index].trans_symbol == trans_symbol:
-    # 				list_vertex_to.append(self.transitions[index].vertex_to)
-
-    # 	return list_vertex_to
 
     def display(self):
         for i in range(len(self.transitions)):

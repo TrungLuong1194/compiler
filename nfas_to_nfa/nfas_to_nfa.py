@@ -1,27 +1,27 @@
-from regex_to_nfas.nfa import NFA
+from transitions.transitions_setting import TransitionsSetting
 import tools.function as function
 
 
 class NFAsToNFA:
     """Transform NFAs to NFA"""
 
-    def __init__(self, epsilon_closures, nfas):
-        self.epsilon_closures = epsilon_closures
+    def __init__(self, nfas, epsilon_closures):
         self.nfas = nfas
+        self.epsilon_closures = epsilon_closures
         self.operands = []
 
     def transform(self):
-        tmp = NFA()
+        tmp = TransitionsSetting()
         final_state = []
 
-        for operator in range(len(self.epsilon_closures.get_operators())):
-            trans_symbol = self.epsilon_closures.get_operators()[operator]
+        for operator in range(len(self.nfas.get_operators())):
+            trans_symbol = self.nfas.get_operators()[operator]
 
             for indexStart in range(len(self.epsilon_closures.operands)):
                 vertex_from = indexStart
                 vertex_to = []
 
-                list_closures = sorted(self.epsilon_closures.operands[indexStart].get_closure())
+                list_closures = sorted(self.epsilon_closures.operands[indexStart].get_closures())
 
                 if self.nfas.get_final_state() in list_closures and indexStart not in final_state:
                     final_state.append(indexStart)
@@ -37,7 +37,7 @@ class NFAsToNFA:
                         list_tmp.append(sorted(self.epsilon_closures.get_epsilon(list_closures_in[i])))
 
                 for i in range(len(list_tmp)):
-                    function.unionList(vertex_to, list_tmp[i])
+                    function.union_list(vertex_to, list_tmp[i])
 
                 if len(vertex_to) > 0:
                     for i in range(len(vertex_to)):

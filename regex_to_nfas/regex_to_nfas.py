@@ -1,5 +1,5 @@
-from regex_to_nfas.nfa import NFA
-import tools.rule as rule
+from transitions.transitions_setting import TransitionsSetting
+import transitions.rule as rule
 
 
 class RegexToNFAs:
@@ -35,20 +35,20 @@ class RegexToNFAs:
                 operators.pop()
 
                 if op_last == '.':
-                    for i in range(op_count):
+                    for j in range(op_count):
                         op2 = self.operands.pop()
                         op1 = self.operands.pop()
                         self.operands.append(rule.concat(op1, op2))
                 else:
                     selections = [0] * (op_count + 1)
                     tracker = op_count
-                    for i in range(op_count + 1):
+                    for j in range(op_count + 1):
                         selections[tracker] = self.operands.pop()
                         tracker -= 1
                     self.operands.append(rule.union(selections, op_count + 1))
 
             else:
-                tmp = NFA()
+                tmp = TransitionsSetting()
                 tmp.set_vertex(2)
                 tmp.set_transition(0, 1, self.regex[i])
                 tmp.set_final_state(1)
