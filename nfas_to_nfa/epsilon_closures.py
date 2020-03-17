@@ -17,15 +17,19 @@ class EpsilonClosures:
         self.operands = []
 
     def transform(self):
-        for i in range(self.nfas.get_final_state() + 1):
-            epsilon_transitions = EpsilonTransitions(i)
-            epsilon_transitions.add_value(i)
-            find_epsilon(i, self.nfas, epsilon_transitions)
+        list_vertex_from = []
+        for i in range(len(self.nfas.transitions)):
+            if self.nfas.transitions[i].vertex_from not in list_vertex_from:
+                list_vertex_from.append(self.nfas.transitions[i].vertex_from)
+
+        for i in range(len(list_vertex_from)):
+            epsilon_transitions = EpsilonTransitions(list_vertex_from[i])
+            epsilon_transitions.add_value(list_vertex_from[i])
+            find_epsilon(list_vertex_from[i], self.nfas, epsilon_transitions)
             self.operands.append(epsilon_transitions)
 
-    def optimize(self):
-        for i in range(self.nfas.get_final_state()):
-            for j in range(i + 1, self.nfas.get_final_state()):
+        for i in range(len(list_vertex_from)):
+            for j in range(i + 1, len(list_vertex_from)):
                 function.concat_list(self.operands[i].get_closures(), self.operands[j].get_closures())
 
     def get_epsilon(self, index):
