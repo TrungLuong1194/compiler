@@ -1,9 +1,9 @@
-from regex_to_nfas.nfa import NFA
+from transitions.transitions_setting import TransitionsSetting
 
 
 def concat(nfa1, nfa2):
     """concatenation expression (a.b)"""
-    result = NFA()
+    result = TransitionsSetting()
 
     result.set_vertex(nfa1.get_vertex_count() + nfa2.get_vertex_count())
 
@@ -31,7 +31,7 @@ def concat(nfa1, nfa2):
 
 def kleene(nfa):
     """Kleene star expression (a*)"""
-    result = NFA()
+    result = TransitionsSetting()
 
     result.set_vertex(nfa.get_vertex_count() + 2)
 
@@ -57,7 +57,7 @@ def kleene(nfa):
 
 def union(selections, no_of_selections):
     """union expression (a|b)"""
-    result = NFA()
+    result = TransitionsSetting()
     vertex_count = 2
 
     for i in range(no_of_selections):
@@ -72,8 +72,10 @@ def union(selections, no_of_selections):
         med = selections[i]
         for j in range(len(med.transitions)):
             new_trans = med.transitions[j]
-            result.set_transition(new_trans.vertex_from + adder_track, new_trans.vertex_to + adder_track,
-                                  new_trans.trans_symbol)
+            result.set_transition(
+                new_trans.vertex_from + adder_track,
+                new_trans.vertex_to + adder_track,
+                new_trans.trans_symbol)
         adder_track += med.get_vertex_count()
 
         result.set_transition(adder_track - 1, vertex_count - 1, 'eps')

@@ -2,6 +2,8 @@ from regex_to_nfas.regex_to_nfas import RegexToNFAs
 from nfas_to_nfa.epsilon_closures import EpsilonClosures
 from nfas_to_nfa.nfas_to_nfa import NFAsToNFA
 from nfa_to_dfa.nfa_to_dfa import NFAToDFA
+from minimize_dfa.reachable_vertex import ReachableVertex
+from minimize_dfa.minimize_dfa import MinimizeDFA
 
 while True:
     regex_input = input("Enter a regression (input 'q' to exit): ")
@@ -19,9 +21,8 @@ while True:
     nfas = regex_to_nfas.get_transform()
     eps = EpsilonClosures(nfas)
     eps.transform()
-    eps.optimize()
 
-    nfas_to_nfa = NFAsToNFA(eps, nfas)
+    nfas_to_nfa = NFAsToNFA(nfas, eps)
     nfas_to_nfa.transform()
     nfas_to_nfa.get_transform().display()
 
@@ -30,6 +31,18 @@ while True:
     print('The required DFA has the transitions:\n')
 
     nfa = nfas_to_nfa.get_transform()
-    nfa_to_dfa = NFAToDFA(nfa, eps)
+    nfa_to_dfa = NFAToDFA(nfa)
     nfa_to_dfa.transform()
     nfa_to_dfa.get_transform().display()
+
+    print('----------------------------------------------------\n')
+
+    print('The minimization of DFA has the transitions:\n')
+
+    dfa = nfa_to_dfa.get_transform()
+    reachable_vertex = ReachableVertex(dfa)
+    reachable_vertex.transform()
+
+    minimize_dfa = MinimizeDFA(dfa, reachable_vertex)
+    minimize_dfa.transform()
+    minimize_dfa.get_transform().display()

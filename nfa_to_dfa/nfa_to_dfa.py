@@ -1,37 +1,35 @@
-from regex_to_nfas.nfa import NFA
+from transitions.transitions_setting import TransitionsSetting
 import tools.function as function
 
 
 class NFAToDFA:
     """Transform NFA to DFA"""
 
-    def __init__(self, nfa, epsilon_closures):
+    def __init__(self, nfa):
         self.nfa = nfa
-        self.epsilon_closures = epsilon_closures
         self.operands = []
 
     def transform(self):
-        tmp = NFA()
+        tmp = TransitionsSetting()
         final_state = []
         vertex_from = []
         stored_state = []
 
         len_final_state = len(self.nfa.get_final_state())
         for i in range(self.nfa.get_final_state()[len_final_state - 1] + 1):
-            temp = []
-            temp.append(i)
+            temp = [i]
             vertex_from.append(temp)
 
         while len(vertex_from) > 0:
             tmp_vertex = vertex_from.pop(0)
             stored_state.append(tmp_vertex)
 
-            for operator in range(len(self.epsilon_closures.get_operators())):
-                trans_symbol = self.epsilon_closures.get_operators()[operator]
+            for operator in range(len(self.nfa.get_operators())):
+                trans_symbol = self.nfa.get_operators()[operator]
 
                 list_vertex_to = []
                 for i in range(len(tmp_vertex)):
-                    function.unionList(list_vertex_to, self.nfa.get_list_vertex_to(tmp_vertex[i], trans_symbol))
+                    function.union_list(list_vertex_to, self.nfa.get_list_vertex_to(tmp_vertex[i], trans_symbol))
 
                 if len(list_vertex_to) > 0:
                     tmp.set_transition(tmp_vertex, list_vertex_to, trans_symbol)
