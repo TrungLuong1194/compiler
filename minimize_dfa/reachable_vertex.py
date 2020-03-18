@@ -24,6 +24,7 @@ class ReachableVertex:
 
         for i in range(len(list_vertex_from)):
             initial_transitions = InitialTransitions(list_vertex_from[i])
+            initial_transitions.add_value(list_vertex_from[i])
             for operator in range(len(self.dfa.get_operators())):
                 trans_symbol = self.dfa.get_operators()[operator]
                 find_next_vertex(list_vertex_from[i], self.dfa, initial_transitions, trans_symbol)

@@ -18,9 +18,8 @@ class EpsilonClosures:
 
     def transform(self):
         list_vertex_from = []
-        for i in range(len(self.nfas.transitions)):
-            if self.nfas.transitions[i].vertex_from not in list_vertex_from:
-                list_vertex_from.append(self.nfas.transitions[i].vertex_from)
+        for i in range(self.nfas.get_final_state() + 1):
+            list_vertex_from.append(i)
 
         for i in range(len(list_vertex_from)):
             epsilon_transitions = EpsilonTransitions(list_vertex_from[i])

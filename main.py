@@ -3,6 +3,7 @@ from nfas_to_nfa.epsilon_closures import EpsilonClosures
 from nfas_to_nfa.nfas_to_nfa import NFAsToNFA
 from nfa_to_dfa.nfa_to_dfa import NFAToDFA
 from minimize_dfa.reachable_vertex import ReachableVertex
+from minimize_dfa.minimize_dfa import MinimizeDFA
 
 while True:
     regex_input = input("Enter a regression (input 'q' to exit): ")
@@ -41,4 +42,7 @@ while True:
     dfa = nfa_to_dfa.get_transform()
     reachable_vertex = ReachableVertex(dfa)
     reachable_vertex.transform()
-    print(reachable_vertex.get_reachable_vertex())
+
+    minimize_dfa = MinimizeDFA(dfa, reachable_vertex)
+    minimize_dfa.transform()
+    minimize_dfa.get_transform().display()
