@@ -12,3 +12,11 @@ def is_child_list(a, b):
         return True
 
     return False
+
+
+def remove_string_by_index(string, tup):
+    """Remove multiple characters of string by index. Indexes are determined in tuple"""
+    for i in range(len(tup)):
+        string = string[0:tup[i] - i:] + string[tup[i] + 1 - i::]
+
+    return string

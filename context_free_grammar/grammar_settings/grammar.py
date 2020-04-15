@@ -34,6 +34,9 @@ class Grammar:
         self.production_rules = [ele for ele in self.production_rules if ele.left_side != symbol]
         self.production_rules = [ele for ele in self.production_rules if symbol not in list(ele.right_side)]
 
+    def remove_production_rule_by_e(self):
+        self.production_rules = [ele for ele in self.production_rules if ele.right_side != 'e']
+
     def display(self):
         print('Nonterminal symbols: ' + str(len(self.non_terminal)))
         for i in range(len(self.non_terminal)):
