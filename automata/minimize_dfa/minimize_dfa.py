@@ -1,5 +1,5 @@
-from transitions.transitions_setting import TransitionsSetting
-from transitions.transitions_minimize import TransitionsMinimize
+from automata.transitions.transitions_setting import TransitionsSetting
+from automata.transitions.transitions_minimize import TransitionsMinimize
 
 
 class MinimizeDFA:

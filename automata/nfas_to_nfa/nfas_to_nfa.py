@@ -1,5 +1,5 @@
-from transitions.transitions_setting import TransitionsSetting
-import tools.function as function
+from automata.transitions.transitions_setting import TransitionsSetting
+import automata.tools.function as function
 
 
 class NFAsToNFA:

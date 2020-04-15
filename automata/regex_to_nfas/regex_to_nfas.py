@@ -1,5 +1,5 @@
-from transitions.transitions_setting import TransitionsSetting
-import transitions.rule as rule
+from automata.transitions.transitions_setting import TransitionsSetting
+import automata.transitions.rule as rule
 
 
 class RegexToNFAs:

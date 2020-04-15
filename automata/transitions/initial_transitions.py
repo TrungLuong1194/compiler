@@ -1,5 +1,5 @@
 class InitialTransitions:
-    """The transitions from the initial state"""
+    """The grammar_settings from the initial state"""
 
     def __init__(self, start):
         self.start = start
