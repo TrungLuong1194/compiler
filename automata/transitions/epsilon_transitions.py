@@ -1,5 +1,5 @@
 class EpsilonTransitions:
-    """Find out all the ε transitions from each state"""
+    """Find out all the ε grammar_settings from each state"""
 
     def __init__(self, start):
         self.start = start

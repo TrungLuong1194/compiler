@@ -1,5 +1,5 @@
-from transitions.epsilon_transitions import EpsilonTransitions
-import tools.function as function
+from automata.transitions.epsilon_transitions import EpsilonTransitions
+import automata.tools.function as function
 
 
 def find_epsilon(index, tmp, epsilon_transitions):

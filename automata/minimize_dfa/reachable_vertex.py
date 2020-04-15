@@ -1,5 +1,5 @@
-from transitions.initial_transitions import InitialTransitions
-import tools.function as function
+from automata.transitions.initial_transitions import InitialTransitions
+import automata.tools.function as function
 
 
 def find_next_vertex(index, tmp, initial_transitions, trans_symbol):

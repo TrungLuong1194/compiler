@@ -1,4 +1,4 @@
-from transitions.transition import Transition
+from automata.transitions.transition import Transition
 
 
 class TransitionsSetting:

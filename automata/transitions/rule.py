@@ -1,4 +1,4 @@
-from transitions.transitions_setting import TransitionsSetting
+from automata.transitions.transitions_setting import TransitionsSetting
 
 
 def concat(nfa1, nfa2):
