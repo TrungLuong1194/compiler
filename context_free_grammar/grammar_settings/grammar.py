@@ -30,6 +30,9 @@ class Grammar:
     def set_start_symbol(self, start_symbol):
         self.start_symbol = start_symbol
 
+    def get_start_symbol(self):
+        return self.start_symbol
+
     def remove_production_rule(self, symbol):
         self.production_rules = [ele for ele in self.production_rules if ele.left_side != symbol]
         self.production_rules = [ele for ele in self.production_rules if symbol not in list(ele.right_side)]

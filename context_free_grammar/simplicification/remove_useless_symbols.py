@@ -7,7 +7,7 @@ class RemoveUselessSymbols:
     def __init__(self, grammar):
         self.grammar = grammar
         self.derivation_list = []
-        self.reachable_list = []
+        self.reachable_list = [self.grammar.get_start_symbol()]
 
     def transform(self):
         for i in self.grammar.terminal:
@@ -26,13 +26,21 @@ class RemoveUselessSymbols:
             if self.grammar.non_terminal[i] not in self.derivation_list:
                 self.grammar.remove_production_rule(self.grammar.non_terminal[i])
 
-        self.grammar.set_non_terminal()
-        self.grammar.set_terminal()
+        self.grammar.setting()
 
         for i in range(len(self.grammar.production_rules)):
-            for j in list(self.grammar.production_rules[i].right_side):
-                if j not in self.reachable_list:
-                    self.reachable_list.append(j)
+            if self.grammar.production_rules[i].left_side == self.grammar.get_start_symbol():
+                right_side_of_start_symbol = list(self.grammar.production_rules[i].right_side)
+                for j in range(len(right_side_of_start_symbol)):
+                    if right_side_of_start_symbol[j] not in self.reachable_list:
+                        self.reachable_list.append(right_side_of_start_symbol[j])
+
+        for i in range(len(self.grammar.production_rules)):
+            if self.grammar.production_rules[i].left_side in self.reachable_list:
+                right_side_of_rule_i = list(self.grammar.production_rules[i].right_side)
+                for j in range(len(right_side_of_rule_i)):
+                    if right_side_of_rule_i[j] not in self.reachable_list:
+                        self.reachable_list.append(right_side_of_rule_i[j])
 
         for i in range(len(self.grammar.non_terminal)):
             if self.grammar.non_terminal[i] not in self.reachable_list:

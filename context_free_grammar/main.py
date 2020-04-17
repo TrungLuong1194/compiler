@@ -1,7 +1,5 @@
 from context_free_grammar.grammar_settings.grammar import Grammar
-from context_free_grammar.simplicification.remove_useless_symbols import RemoveUselessSymbols
-from context_free_grammar.simplicification.remove_null import RemoveNull
-from context_free_grammar.simplicification.remove_unit import RemoveUnit
+from context_free_grammar.chomsky_normal_form.chomsky_transform import ChomskyTransform
 
 grammar = Grammar()
 
@@ -21,22 +19,8 @@ grammar.set_start_symbol('T')
 grammar.display()
 
 print('-' * 80)
-print('Remove useless symbols:\n')
+print("Chomsky's Normal Form:\n")
 
-remove_useless_symbols = RemoveUselessSymbols(grammar)
-remove_useless_symbols.transform()
-grammar.display()
-
-print('-' * 80)
-print('Remove null:\n')
-
-remove_null = RemoveNull(grammar)
-remove_null.transform()
-grammar.display()
-
-print('-' * 80)
-print('Remove unit production:\n')
-
-remove_unit = RemoveUnit(grammar)
-remove_unit.transform()
+chomsky_transform = ChomskyTransform(grammar)
+chomsky_transform.transform()
 grammar.display()
