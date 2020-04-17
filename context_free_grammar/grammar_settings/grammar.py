@@ -40,6 +40,10 @@ class Grammar:
     def remove_production_rule_by_unit(self, symbol):
         self.production_rules = [ele for ele in self.production_rules if ele.right_side != symbol]
 
+    def setting(self):
+        self.set_non_terminal()
+        self.set_terminal()
+
     def display(self):
         print('Nonterminal symbols: ' + str(len(self.non_terminal)))
         for i in range(len(self.non_terminal)):

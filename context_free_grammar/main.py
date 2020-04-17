@@ -16,8 +16,7 @@ grammar.set_production_rules('B', 'e')
 grammar.set_production_rules('A', 'e')
 grammar.set_production_rules('E', 'e')
 
-grammar.set_non_terminal()
-grammar.set_terminal()
+grammar.setting()
 grammar.set_start_symbol('T')
 grammar.display()
 

@@ -38,5 +38,4 @@ class RemoveUselessSymbols:
             if self.grammar.non_terminal[i] not in self.reachable_list:
                 self.grammar.remove_production_rule(self.grammar.non_terminal[i])
 
-        self.grammar.set_non_terminal()
-        self.grammar.set_terminal()
+        self.grammar.setting()

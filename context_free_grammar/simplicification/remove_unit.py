@@ -34,5 +34,4 @@ class RemoveUnit:
             if symbol:
                 self.grammar.remove_production_rule_by_unit(symbol)
 
-        self.grammar.set_non_terminal()
-        self.grammar.set_terminal()
+        self.grammar.setting()

@@ -45,5 +45,4 @@ class RemoveNull:
                             self.grammar.set_production_rules(self.grammar.production_rules[j].left_side,
                                                               new_right_side)
 
-        self.grammar.set_non_terminal()
-        self.grammar.set_terminal()
+        self.grammar.setting()
