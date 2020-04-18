@@ -31,14 +31,18 @@ A symbol can be useless if it does not appear on the right-hand side of the prod
 The productions of type S → ε are called ε productions. These type of productions can only be removed from those grammars that do not generate ε.
 
 - Step 1: First find out all nullable non-terminal variable which derives ε.
+
 - Step 2: For each production A → a, construct all production A → x, where x is obtained from a by removing one or more non-terminal from step 1.
+
 - Step 3: Now combine the result of step 2 with the original production and remove ε productions.
 
 ##### Removing Unit Productions
 The unit productions are the productions in which one non-terminal gives another non-terminal. Use the following steps to remove unit production:
 
 - Step 1: To remove X → Y, add production X → a to the grammar rule whenever Y → a occurs in the grammar.
+
 - Step 2: Now delete X → Y from the grammar.
+
 - Step 3: Repeat step 1 and step 2 until all unit productions are removed.
 
 ## Chomsky's Normal Form (CNF)
@@ -57,7 +61,9 @@ CNF stands for Chomsky normal form. A CFG (context free grammar) is in CNF (Chom
         S1 → S  
     
 Where S1 is the new start symbol.
+
 - Step 2: In the grammar, remove the null, unit and useless productions. You can refer to the Simplification of CFG.
+
 - Step 3: Eliminate terminals from the RHS of the production if they exist with other non-terminals or terminals. For example, production S → aA can be decomposed as:
 
         S → RA  
