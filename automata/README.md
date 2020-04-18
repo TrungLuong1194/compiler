@@ -13,11 +13,11 @@ https://www.javatpoint.com/finite-automata
 ##### Formal Definition of FA
 - A finite automaton is a collection of 5-tuple (Q, ∑, δ, q0, F), where:
 
-    Q: finite set of states  
-    ∑: finite set of the input symbol  
-    q0: initial state   
-    F: final state  
-    δ: Transition function  
+        Q: finite set of states  
+        ∑: finite set of the input symbol  
+        q0: initial state   
+        F: final state  
+        δ: Transition function  
 
 ##### Types of Automata
 - There are two types of finite automata:
@@ -133,8 +133,8 @@ Minimization of DFA means reducing the number of states from given FA. Thus, we 
 
 - Step 4: Find similar rows from T1 such that:
 
-    1. δ (q, a) = p  
-    2. δ (r, a) = p  
+        1. δ (q, a) = p  
+        2. δ (r, a) = p  
     
 That means, find the two states which have the same value of a and b and remove one of them.
     
