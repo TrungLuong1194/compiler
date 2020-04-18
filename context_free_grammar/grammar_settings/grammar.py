@@ -27,8 +27,14 @@ class Grammar:
         trans = Transition(left_side, right_side)
         self.production_rules.append(trans)
 
+    def modify_production_rule(self, index, value):
+        self.production_rules[index].right_side = value
+
     def set_start_symbol(self, start_symbol):
         self.start_symbol = start_symbol
+
+    def get_start_symbol(self):
+        return self.start_symbol
 
     def remove_production_rule(self, symbol):
         self.production_rules = [ele for ele in self.production_rules if ele.left_side != symbol]
@@ -37,18 +43,29 @@ class Grammar:
     def remove_production_rule_by_e(self):
         self.production_rules = [ele for ele in self.production_rules if ele.right_side != 'e']
 
+    def remove_production_rule_by_unit(self, symbol):
+        self.production_rules = [ele for ele in self.production_rules if ele.right_side != symbol]
+
+    def setting(self):
+        self.set_non_terminal()
+        self.set_terminal()
+
     def display(self):
         print('Nonterminal symbols: ' + str(len(self.non_terminal)))
         for i in range(len(self.non_terminal)):
             print(self.non_terminal[i])
+        print()
 
         print('Terminal symbols: ' + str(len(self.terminal)))
         for i in range(len(self.terminal)):
             print(self.terminal[i])
+        print()
 
         print('Production rules: ' + str(len(self.production_rules)))
         for i in range(len(self.production_rules)):
             print(str(self.production_rules[i].left_side) + ' ------> ' + str(self.production_rules[i].right_side))
+        print()
 
         print('Start symbol:')
         print(self.start_symbol)
+        print()
