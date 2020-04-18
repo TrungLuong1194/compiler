@@ -3,16 +3,13 @@ from context_free_grammar.chomsky_normal_form.chomsky_transform import ChomskyTr
 
 grammar = Grammar()
 
-grammar.set_production_rules('T', 'aaBaaB')
-grammar.set_production_rules('T', 'abA')
-grammar.set_production_rules('T', 'aaT')
-grammar.set_production_rules('A', 'aA')
-grammar.set_production_rules('B', 'ab')
-grammar.set_production_rules('B', 'b')
-grammar.set_production_rules('C', 'ad')
-grammar.set_production_rules('B', 'e')
+grammar.set_production_rules('S', 'ASB')
+grammar.set_production_rules('A', 'aAS')
+grammar.set_production_rules('A', 'a')
 grammar.set_production_rules('A', 'e')
-grammar.set_production_rules('E', 'e')
+grammar.set_production_rules('B', 'SbS')
+grammar.set_production_rules('B', 'A')
+grammar.set_production_rules('B', 'bb')
 
 grammar.setting()
 grammar.set_start_symbol('T')

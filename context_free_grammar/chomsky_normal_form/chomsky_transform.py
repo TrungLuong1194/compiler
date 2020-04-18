@@ -22,14 +22,22 @@ class ChomskyTransform:
         """
         list_terminal = []
         list_index = []
+
         for i in range(len(self.grammar.production_rules)):
+            # Check 'aS'
             if function.intersection(self.grammar.production_rules[i].right_side, self.grammar.non_terminal) and \
                     function.intersection(self.grammar.production_rules[i].right_side, self.grammar.terminal):
                 list_index.append(i)
-                list_tmp = function.intersection(self.grammar.production_rules[i].right_side, self.grammar.terminal)
-                for j in range(len(list_tmp)):
-                    if list_tmp[j] not in list_terminal:
-                        list_terminal.append(list_tmp[j])
+
+            # Check 'aa'
+            if not function.intersection(self.grammar.production_rules[i].right_side, self.grammar.non_terminal) and \
+                    len(self.grammar.production_rules[i].right_side) > 1:
+                list_index.append(i)
+
+            list_tmp = function.intersection(self.grammar.production_rules[i].right_side, self.grammar.terminal)
+            for j in range(len(list_tmp)):
+                if list_tmp[j] not in list_terminal:
+                    list_terminal.append(list_tmp[j])
 
         return list_terminal, list_index
 
@@ -43,10 +51,12 @@ class ChomskyTransform:
         # Step 2: Removing the null, unit and useless productions
         remove_null = RemoveNull(self.grammar)
         remove_null.transform()
+
         remove_unit = RemoveUnit(self.grammar)
         remove_unit.transform()
-        remove_useless_symbols = RemoveUselessSymbols(self.grammar)
-        remove_useless_symbols.transform()
+
+        # remove_useless_symbols = RemoveUselessSymbols(self.grammar)
+        # remove_useless_symbols.transform()
 
         self.grammar.setting()
 

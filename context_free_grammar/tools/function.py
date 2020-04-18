@@ -19,6 +19,9 @@ def remove_string_by_index(string, tup):
     for i in range(len(tup)):
         string = string[0:tup[i] - i:] + string[tup[i] + 1 - i::]
 
+    if not string:
+        return 'e'
+
     return string
 
 
