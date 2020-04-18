@@ -3,7 +3,7 @@ from context_free_grammar.chomsky_normal_form.chomsky_transform import ChomskyTr
 
 grammar = Grammar()
 
-grammar.set_production_rules('T', 'aaB')
+grammar.set_production_rules('T', 'aaBaaB')
 grammar.set_production_rules('T', 'abA')
 grammar.set_production_rules('T', 'aaT')
 grammar.set_production_rules('A', 'aA')

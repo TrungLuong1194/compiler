@@ -20,3 +20,19 @@ def remove_string_by_index(string, tup):
         string = string[0:tup[i] - i:] + string[tup[i] + 1 - i::]
 
     return string
+
+
+def intersection(lst1, lst2):
+    """intersection of two lists"""
+    return list(set(lst1) & set(lst2))
+
+
+def replace(str1, str2):
+    """
+    replace 2 first elements of str1 by str2
+    Ex:
+    str1 = 'trung'
+    str2 = 'B'
+    replace(str1, str2) = 'Bung'
+    """
+    return str2 + str1[2:]
