@@ -1,6 +1,6 @@
-from context_free_grammar.simplicification.remove_useless_symbols import RemoveUselessSymbols
-from context_free_grammar.simplicification.remove_null import RemoveNull
-from context_free_grammar.simplicification.remove_unit import RemoveUnit
+from context_free_grammar.simplification.remove_useless_symbols import RemoveUselessSymbols
+from context_free_grammar.simplification.remove_null import RemoveNull
+from context_free_grammar.simplification.remove_unit import RemoveUnit
 import context_free_grammar.tools.function as function
 import string
 
