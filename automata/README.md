@@ -1,4 +1,4 @@
-# Compiler
+# Automata
 
 ## Finite Automata
 

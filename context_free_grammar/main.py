@@ -12,7 +12,7 @@ grammar.set_production_rules('B', 'A')
 grammar.set_production_rules('B', 'bb')
 
 grammar.setting()
-grammar.set_start_symbol('T')
+grammar.set_start_symbol('S')
 grammar.display()
 
 print('-' * 80)
