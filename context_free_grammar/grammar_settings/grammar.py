@@ -24,10 +24,10 @@ class Grammar:
         for elem in root[2]:
             left_side = elem[0].attrib['name']
             right_side = []
-            
+
             for subElem in elem[1]:
                 right_side.append(subElem.attrib['name'])
-        
+
             trans = Transition(left_side, right_side)
             self.rule.append(trans)
 
@@ -67,26 +67,29 @@ class Grammar:
         trans = Transition(left_side, right_side)
         self.rule.append(trans)
 
-    def remove_terminal_e(self):
-        self.terminal.remove('e')
+    def add_non_terminal(self, symbol):
+        self.non_terminal.append(symbol)
 
+    def update_start_symbol(self, symbol):
+        self.start_symbol = symbol
+
+    # for remove null
     def remove_production_rule_by_e(self):
         self.rule = [ele for ele in self.rule if ele.right_side != ['e']]
 
+    def remove_terminal_e(self):
+        self.terminal.remove('e')
+
+    # for remove unit
     def remove_production_rule_by_unit(self, symbol):
         self.rule = [ele for ele in self.rule if ele.right_side != list(symbol)]
 
+    # for remove useless symbol
+    def remove_production_rule_by_useless(self, symbol):
+        self.rule = [ele for ele in self.rule if symbol not in ele.right_side]
 
+    def remove_production_rule_by_useless_list(self, x):
+        self.rule = [ele for ele in self.rule if ele.left_side not in x]
 
-
-
-    # def modify_production_rule(self, index, value):
-    #     self.production_rules[index].right_side = value
-    #
-    # def remove_production_rule(self, symbol):
-    #     self.production_rules = [ele for ele in self.production_rules if ele.left_side != symbol]
-    #     self.production_rules = [ele for ele in self.production_rules if symbol not in list(ele.right_side)]
-    #
-
-    #
-
+    def remove_terminal_useless(self, symbol):
+        self.non_terminal.remove(symbol)

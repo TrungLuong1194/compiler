@@ -30,7 +30,6 @@ class RemoveNull:
 
         for ele in e_list:
             for index in range(len(self.grammar.rule)):
-
                 if ele in self.grammar.rule[index].right_side:
                     # Return right side list, which have left side = left side of rule index
                     right_side_of_rule_index = []

@@ -1,4 +1,3 @@
-from context_free_grammar.simplification.remove_useless_symbols import RemoveUselessSymbols
 from context_free_grammar.simplification.remove_null import RemoveNull
 from context_free_grammar.simplification.remove_unit import RemoveUnit
 import context_free_grammar.tools.function as function
@@ -11,30 +10,26 @@ class ChomskyTransform:
     def __init__(self, grammar):
         self.grammar = grammar
 
-    def check_production_rule(self):
+    def check_production_rule_step_3(self):
         """
-        Check production rules: RHS of the production if they exist with other non-terminals or terminals
-        Ex: if:
-                S -> aA
-            then:
-                a_N -> a
-                S -> a_NA
+        Check production rules: RHS of the production if they exist with other non-terminals or terminals.
+        ['a', 'A'] or ['a', 'a']
         """
         list_terminal = []
         list_index = []
 
-        for i in range(len(self.grammar.production_rules)):
-            # Check 'aS'
-            if function.intersection(self.grammar.production_rules[i].right_side, self.grammar.non_terminal) and \
-                    function.intersection(self.grammar.production_rules[i].right_side, self.grammar.terminal):
+        for i in range(len(self.grammar.rule)):
+            # Check ['a', 'A']
+            if function.intersection(self.grammar.rule[i].right_side, self.grammar.non_terminal) and \
+                    function.intersection(self.grammar.rule[i].right_side, self.grammar.terminal):
                 list_index.append(i)
 
-            # Check 'aa'
-            if not function.intersection(self.grammar.production_rules[i].right_side, self.grammar.non_terminal) and \
-                    len(self.grammar.production_rules[i].right_side) > 1:
+            # Check ['a', 'a']
+            if not function.intersection(self.grammar.rule[i].right_side, self.grammar.non_terminal) and \
+                    len(self.grammar.rule[i].right_side) > 1:
                 list_index.append(i)
 
-            list_tmp = function.intersection(self.grammar.production_rules[i].right_side, self.grammar.terminal)
+            list_tmp = function.intersection(self.grammar.rule[i].right_side, self.grammar.terminal)
             for j in range(len(list_tmp)):
                 if list_tmp[j] not in list_terminal:
                     list_terminal.append(list_tmp[j])
@@ -43,10 +38,9 @@ class ChomskyTransform:
 
     def transform(self):
         # Step 1: Eliminate start symbol from the RHS
-        self.grammar.set_production_rules('S0', self.grammar.get_start_symbol())
-        self.grammar.set_start_symbol('S0')
-
-        self.grammar.setting()
+        self.grammar.add_production_rules('S0', list(self.grammar.get_start_symbol()))
+        self.grammar.add_non_terminal('S0')
+        self.grammar.update_start_symbol('S0')
 
         # Step 2: Removing the null, unit and useless productions
         remove_null = RemoveNull(self.grammar)
@@ -55,64 +49,48 @@ class ChomskyTransform:
         remove_unit = RemoveUnit(self.grammar)
         remove_unit.transform()
 
-        # remove_useless_symbols = RemoveUselessSymbols(self.grammar)
-        # remove_useless_symbols.transform()
-
-        self.grammar.setting()
-
+        symbol_replace = string.ascii_uppercase  # Return string "AB...Z"
         # Step 3: Eliminate terminals from the RHS of the production if they exist with other non-terminals or terminals
-        list_terminal, list_index = self.check_production_rule()
-        symbol_replace = string.ascii_uppercase
-        dict_replace_step_3 = {}
+        list_terminal, list_index = self.check_production_rule_step_3()
 
-        for i in range(len(list_terminal)):
-            for j in range(len(symbol_replace)):
-                if symbol_replace[j] not in self.grammar.non_terminal and \
-                        symbol_replace[j] not in dict_replace_step_3.values():
-                    dict_replace_step_3[list_terminal[i]] = symbol_replace[j]
+        # S --> ['a', 'A'] => aN --> ['a'], S --> ['aN', 'A']
+        for ele in list_terminal:
+
+            for s in range(len(symbol_replace)):
+                if symbol_replace[s] not in self.grammar.non_terminal:
+                    self.grammar.add_production_rules(symbol_replace[s], list(ele))
+                    self.grammar.add_non_terminal(symbol_replace[s])
+
+                    for i in list_index:
+                        for j in range(len(self.grammar.rule[i].right_side)):
+                            if self.grammar.rule[i].right_side[j] == ele:
+                                self.grammar.rule[i].right_side[j] = symbol_replace[s]
+
                     break
 
-        for k, v in dict_replace_step_3.items():
-            self.grammar.set_production_rules(v, k)
-
-        for i in range(len(self.grammar.production_rules)):
-            if i in list_index:
-                right_side_of_rule_i = self.grammar.production_rules[i].right_side
-                for j in range(len(right_side_of_rule_i)):
-                    if right_side_of_rule_i[j] in list_terminal:
-                        right_side_of_rule_i = right_side_of_rule_i.replace(
-                            right_side_of_rule_i[j],
-                            dict_replace_step_3[right_side_of_rule_i[j]]
-                        )
-
-                        self.grammar.modify_production_rule(i, right_side_of_rule_i)
-
-        self.grammar.setting()
-
         # Step 4: Eliminate RHS with more than two non-terminals
-        dict_replace_step_4 = {}
+        tmp = []  # store right side need replace
+        data = {}  # store value replaced
 
-        for i in range(len(self.grammar.production_rules)):
-            right_side_of_rule_i = self.grammar.production_rules[i].right_side
+        for i in range(len(self.grammar.rule)):
+            while function.intersection(self.grammar.rule[i].right_side, self.grammar.non_terminal) and len(
+                    self.grammar.rule[i].right_side) > 2:
+                if self.grammar.rule[i].right_side[0:2] not in tmp:
+                    tmp.append(self.grammar.rule[i].right_side[0:2])
 
-            while function.intersection(list(right_side_of_rule_i), self.grammar.non_terminal) and \
-                    len(right_side_of_rule_i) > 2:
+                    for s in range(len(symbol_replace)):
+                        if symbol_replace[s] not in self.grammar.non_terminal:
+                            data[symbol_replace[s]] = self.grammar.rule[i].right_side[0:2]
 
-                if right_side_of_rule_i[0:2] not in dict_replace_step_4.keys():
-                    for j in range(len(symbol_replace)):
-                        if symbol_replace[j] not in self.grammar.non_terminal and \
-                                symbol_replace[j] not in dict_replace_step_4.values():
-                            dict_replace_step_4[right_side_of_rule_i[0:2]] = symbol_replace[j]
+                            self.grammar.add_production_rules(symbol_replace[s], self.grammar.rule[i].right_side[0:2])
+                            self.grammar.add_non_terminal(symbol_replace[s])
+
+                            self.grammar.rule[i].right_side = \
+                                list(symbol_replace[s]) + \
+                                self.grammar.rule[i].right_side[2:]
+
                             break
-
-                right_side_of_rule_i = function.replace(
-                    right_side_of_rule_i,
-                    dict_replace_step_4[right_side_of_rule_i[0:2]]
-                )
-
-                self.grammar.modify_production_rule(i, right_side_of_rule_i)
-
-        for k, v in dict_replace_step_4.items():
-            self.grammar.set_production_rules(v, k)
-
-        self.grammar.setting()
+                else:
+                    self.grammar.rule[i].right_side = \
+                        [k for k, v in data.items() if v == self.grammar.rule[i].right_side[0:2]] \
+                        + self.grammar.rule[i].right_side[2:]

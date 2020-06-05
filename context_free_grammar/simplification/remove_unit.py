@@ -10,7 +10,8 @@ class RemoveUnit:
             flag = False
 
             for index in range(len(self.grammar.rule)):
-                if len(self.grammar.rule[index].right_side) == 1 and \
+                if self.grammar.rule[index].left_side != self.grammar.get_start_symbol() and \
+                        len(self.grammar.rule[index].right_side) == 1 and \
                         self.grammar.rule[index].right_side[0] in self.grammar.non_terminal:
                     unit_element = self.grammar.rule[index].right_side[0]
 
