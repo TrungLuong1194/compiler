@@ -33,6 +33,9 @@ class MinimizeDFA:
         non_final.remove_duplicate()
         final.remove_duplicate()
 
+        # Save new list vertex_to
+        vertex_to_list = []
+
         # Combined transition
         tmp = TransitionsSetting()
         for i in range(len(non_final.transitions)):
@@ -41,13 +44,19 @@ class MinimizeDFA:
                 non_final.transitions[i].vertex_to,
                 non_final.transitions[i].trans_symbol)
 
+            vertex_to_list.append(non_final.transitions[i].vertex_to)
+
         for i in range(len(final.transitions)):
             tmp.set_transition(
                 final.transitions[i].vertex_from,
                 final.transitions[i].vertex_to,
                 final.transitions[i].trans_symbol)
 
-        tmp.set_final_state(self.dfa.get_final_state())
+            vertex_to_list.append(final.transitions[i].vertex_to)
+
+        final_state = [x for x in self.dfa.get_final_state() if x in vertex_to_list]
+
+        tmp.set_final_state(final_state)
 
         self.operands.append(tmp)
 

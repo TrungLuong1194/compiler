@@ -41,6 +41,12 @@ class NFAToDFA:
                 if len(list_vertex_to) > 0 and list_vertex_to not in vertex_from and list_vertex_to not in stored_state:
                     vertex_from.append(list_vertex_to)
 
+        for i in range(len(tmp.transitions)):
+            for j in self.nfa.get_final_state():
+                if j in tmp.transitions[i].vertex_from and tmp.transitions[i].vertex_from not in final_state:
+                    final_state.append(tmp.transitions[i].vertex_from)
+                    break
+
         tmp.set_final_state(final_state)
 
         self.operands.append(tmp)
