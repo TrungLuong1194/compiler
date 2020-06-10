@@ -13,7 +13,7 @@ class RegexToDFA:
     def transform(self):
         regex_to_nfas = RegexToNFAs(self.regex)
         regex_to_nfas.transform()
-        regex_to_nfas.get_transform().display()
+        regex_to_nfas.get_transform()
 
         nfas = regex_to_nfas.get_transform()
         eps = EpsilonClosures(nfas)
@@ -21,19 +21,20 @@ class RegexToDFA:
 
         nfas_to_nfa = NFAsToNFA(nfas, eps)
         nfas_to_nfa.transform()
-        nfas_to_nfa.get_transform().display()
+        nfas_to_nfa.get_transform()
 
         nfa = nfas_to_nfa.get_transform()
         nfa_to_dfa = NFAToDFA(nfa)
         nfa_to_dfa.transform()
-        nfa_to_dfa.get_transform().display()
+        nfa_to_dfa.get_transform()
 
         dfa = nfa_to_dfa.get_transform()
         reachable_vertex = ReachableVertex(dfa)
         reachable_vertex.transform()
 
+        # print(reachable_vertex.get_reachable_vertex())
+
         minimize_dfa = MinimizeDFA(dfa, reachable_vertex)
         minimize_dfa.transform()
-        minimize_dfa.get_transform().display()
 
-        # return minimize_dfa.get_transform()
+        return minimize_dfa.get_transform()
