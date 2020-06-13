@@ -1,10 +1,9 @@
 x = 5
 
-if x >= 5:
-    y = 0
-
-for i in range(5):
+for i in range(100):
     x = x + 1
-    print(x)
 
-0ab = 5
+y = None
+
+if x < 10:
+    x = 4

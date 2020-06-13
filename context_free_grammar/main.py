@@ -24,5 +24,3 @@ grammar.display()
 # output file xml
 xml = WriteXml(grammar)
 xml.write()
-
-
