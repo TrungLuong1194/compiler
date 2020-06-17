@@ -3,7 +3,10 @@ from context_free_grammar.chomsky_normal_form.chomsky_transform import ChomskyTr
 from context_free_grammar.tools.write_xml import WriteXml
 from syntax_analysis.first import First
 from syntax_analysis.follow import Follow
+from syntax_analysis.parse_table import ParseTable
 import xml.etree.ElementTree as elementTree
+import pandas as pd
+import numpy as np
 
 # import xml data
 tree = elementTree.parse('input.xml')
@@ -35,27 +38,9 @@ follow_set = follow.transform()
 for i, v in follow_set.items():
     print('Follow<' + str(i) + '> : ' + str(v))
 
-# add 'e' in parse table
-tmp = []
-for i, v in first_set.items():
-    if 'e' in v:
-        tmp.append(i)
-
-tmp_dict = {}
-for ele in tmp:
-    for i in range(len(grammar.rule)):
-        if grammar.rule[i].left_side == ele and grammar.rule[i].right_side == ['e']:
-            tmp_dict[ele] = i + 1
-            break
-
-for i, v in follow_set.items():
-    if i in tmp_dict:
-        for ele in v:
-            parse_table[(i, ele)] = tmp_dict[i]
-
 # parse table
 print('-' * 50)
 print('Parse Table:')
 
-for i, v in parse_table.items():
-    print(str(i) + ' - ' + str(v))
+parse_table = ParseTable(grammar)
+print(parse_table.transform())
