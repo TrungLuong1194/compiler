@@ -32,6 +32,7 @@ class RegexToNFAs:
                 while operators[len(operators) - 1] != '(':
                     operators.pop()
                     op_count += 1
+
                 operators.pop()
 
                 if op_last == '.':
@@ -40,12 +41,10 @@ class RegexToNFAs:
                         op1 = self.operands.pop()
                         self.operands.append(rule.concat(op1, op2))
                 else:
-                    selections = [0] * (op_count + 1)
-                    tracker = op_count
-                    for j in range(op_count + 1):
-                        selections[tracker] = self.operands.pop()
-                        tracker -= 1
-                    self.operands.append(rule.union(selections, op_count + 1))
+                    for j in range(op_count):
+                        op2 = self.operands.pop()
+                        op1 = self.operands.pop()
+                        self.operands.append(rule.union(op1, op2))
 
             else:
                 tmp = TransitionsSetting()
