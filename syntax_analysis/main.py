@@ -15,17 +15,17 @@ grammar = Grammar()
 grammar.setting(root)
 grammar.display()
 
-# first rule
+# first set
 first = First(grammar)
 
 print('-' * 50)
 print('First Sets:')
-first_set = first.transform()
+first_set, parse_table = first.transform()
 
 for i, v in first_set.items():
     print('First<' + str(i) + '> : ' + str(v))
 
-# first rule
+# follow set
 follow = Follow(grammar, first_set)
 
 print('-' * 50)
@@ -34,3 +34,28 @@ follow_set = follow.transform()
 
 for i, v in follow_set.items():
     print('Follow<' + str(i) + '> : ' + str(v))
+
+# add 'e' in parse table
+tmp = []
+for i, v in first_set.items():
+    if 'e' in v:
+        tmp.append(i)
+
+tmp_dict = {}
+for ele in tmp:
+    for i in range(len(grammar.rule)):
+        if grammar.rule[i].left_side == ele and grammar.rule[i].right_side == ['e']:
+            tmp_dict[ele] = i + 1
+            break
+
+for i, v in follow_set.items():
+    if i in tmp_dict:
+        for ele in v:
+            parse_table[(i, ele)] = tmp_dict[i]
+
+# parse table
+print('-' * 50)
+print('Parse Table:')
+
+for i, v in parse_table.items():
+    print(str(i) + ' - ' + str(v))

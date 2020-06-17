@@ -8,6 +8,7 @@ class First:
 
     def transform(self):
         first_dict = {}
+        parse_table = {}
 
         flag = True
         while flag:
@@ -34,6 +35,9 @@ class First:
                     if self.grammar.rule[i].left_side not in first_dict:
                         first_dict[self.grammar.rule[i].left_side] = [self.grammar.rule[i].right_side[0]]
                         flag = True
+
+                    if self.grammar.rule[i].right_side[0] != 'e':
+                        parse_table[(self.grammar.rule[i].left_side, self.grammar.rule[i].right_side[0])] = i + 1
 
                 # For a production rule X -> Y0 Y1 Y2
                 # If e ∉ First(Y0), then First(X) = First(Y0)
@@ -72,8 +76,15 @@ class First:
                                 if ele not in first_dict[self.grammar.rule[i].left_side]:
                                     first_dict[self.grammar.rule[i].left_side].append(ele)
                                     flag = True
+
+                                    if ele != 'e':
+                                        parse_table[(self.grammar.rule[i].left_side, ele)] = i + 1
                         else:
                             first_dict[self.grammar.rule[i].left_side] = tmp
                             flag = True
 
-        return first_dict
+                            for ele in tmp:
+                                if ele != 'e':
+                                    parse_table[(self.grammar.rule[i].left_side, ele)] = i + 1
+
+        return first_dict, parse_table

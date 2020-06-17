@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar name="G">
     <terminalsymbols>
-		<term name="+" />
-		<term name="*" />
-		<term name="id" />
-		<term name="(" />
-		<term name=")" />
-		<term name="e" />
+<!--		<term name="+" />-->
+<!--		<term name="*" />-->
+<!--		<term name="id" />-->
+<!--		<term name="(" />-->
+<!--		<term name=")" />-->
+<!--		<term name="e" />-->
+
+
 
 <!--		<term name="a" />-->
 <!--		<term name="b" />-->
@@ -14,76 +16,99 @@
 <!--		<term name="g" />-->
 <!--		<term name="h" />-->
 <!--		<term name="e" />-->
+
+
+
+		<term name="+" />
+		<term name="*" />
+		<term name="n" />
+		<term name="(" />
+		<term name=")" />
+		<term name="e" />
     </terminalsymbols>
 	<nonterminalsymbols>
-		<nonterm name="E" />
-		<nonterm name="E'" />
-		<nonterm name="T" />
-		<nonterm name="T'" />
-		<nonterm name="F" />
+<!--		<nonterm name="E" />-->
+<!--		<nonterm name="E'" />-->
+<!--		<nonterm name="T" />-->
+<!--		<nonterm name="T'" />-->
+<!--		<nonterm name="F" />-->
+
+
 
 <!--		<nonterm name="S" />-->
 <!--		<nonterm name="A" />-->
 <!--		<nonterm name="B" />-->
 <!--		<nonterm name="C" />-->
+
+
+
+		<nonterm name="E" />
+		<nonterm name="R" />
+		<nonterm name="T" />
+		<nonterm name="S" />
+		<nonterm name="F" />
 	</nonterminalsymbols>
 	<productions>
-		<production>
-			<lhs name="E" />
-			<rhs>
-				<symbol type="nonterm" name="T" />
-				<symbol type="nonterm" name="E'" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="E'" />
-			<rhs>
-				<symbol type="term" name="+" />
-				<symbol type="nonterm" name="T" />
-				<symbol type="nonterm" name="E'" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="E'" />
-			<rhs>
-				<symbol type="term" name="e" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="T" />
-			<rhs>
-				<symbol type="nonterm" name="F" />
-				<symbol type="nonterm" name="T'" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="T'" />
-			<rhs>
-				<symbol type="term" name="*" />
-				<symbol type="nonterm" name="F" />
-				<symbol type="nonterm" name="T'" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="T'" />
-			<rhs>
-				<symbol type="term" name="e" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="F" />
-			<rhs>
-				<symbol type="term" name="(" />
-				<symbol type="nonterm" name="E" />
-				<symbol type="term" name=")" />
-			</rhs>
-		</production>
-		<production>
-			<lhs name="F" />
-			<rhs>
-				<symbol type="term" name="id" />
-			</rhs>
-		</production>
+
+
+<!--		<production>-->
+<!--			<lhs name="E" />-->
+<!--			<rhs>-->
+<!--				<symbol type="nonterm" name="T" />-->
+<!--				<symbol type="nonterm" name="E'" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="E'" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="+" />-->
+<!--				<symbol type="nonterm" name="T" />-->
+<!--				<symbol type="nonterm" name="E'" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="E'" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="e" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="T" />-->
+<!--			<rhs>-->
+<!--				<symbol type="nonterm" name="F" />-->
+<!--				<symbol type="nonterm" name="T'" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="T'" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="*" />-->
+<!--				<symbol type="nonterm" name="F" />-->
+<!--				<symbol type="nonterm" name="T'" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="T'" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="e" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="F" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="(" />-->
+<!--				<symbol type="nonterm" name="E" />-->
+<!--				<symbol type="term" name=")" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+<!--		<production>-->
+<!--			<lhs name="F" />-->
+<!--			<rhs>-->
+<!--				<symbol type="term" name="id" />-->
+<!--			</rhs>-->
+<!--		</production>-->
+
+
 
 <!--		<production>-->
 <!--			<lhs name="S" />-->
@@ -147,7 +172,72 @@
 <!--			</rhs>-->
 <!--		</production>-->
 
+
+
+		<production>
+			<lhs name="E" />
+			<rhs>
+				<symbol type="nonterm" name="T" />
+				<symbol type="nonterm" name="R" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="R" />
+			<rhs>
+				<symbol type="term" name="e" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="R" />
+			<rhs>
+				<symbol type="term" name="+" />
+				<symbol type="nonterm" name="E" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="T" />
+			<rhs>
+				<symbol type="nonterm" name="F" />
+				<symbol type="nonterm" name="S" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="S" />
+			<rhs>
+				<symbol type="term" name="e" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="S" />
+			<rhs>
+				<symbol type="term" name="*" />
+				<symbol type="nonterm" name="T" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="F" />
+			<rhs>
+				<symbol type="term" name="n" />
+			</rhs>
+		</production>
+		<production>
+			<lhs name="F" />
+			<rhs>
+				<symbol type="term" name="(" />
+				<symbol type="nonterm" name="E" />
+				<symbol type="term" name=")" />
+			</rhs>
+		</production>
+
+
+
+
 	</productions>
-	<startsymbol name="E" />
+<!--	<startsymbol name="E" />-->
+
+
 <!--	<startsymbol name="S" />-->
+
+
+	<startsymbol name="E" />
 </grammar>
