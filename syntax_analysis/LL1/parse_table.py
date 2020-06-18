@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from syntax_analysis.first import First
-from syntax_analysis.follow import Follow
+from syntax_analysis.LL1.first import First
+from syntax_analysis.LL1.follow import Follow
 
 
 class ParseTable:
@@ -63,4 +63,4 @@ class ParseTable:
         for i, v in parse_table.items():
             df.loc[i[0], i[1]] = v
 
-        return df
+        return df, parse_table

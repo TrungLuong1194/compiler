@@ -3,35 +3,29 @@ from enum import Enum
 
 class TokenType(Enum):
     # Keywords
-    AS = 'as'
-    CLASS = 'class'
     ELSE = 'else'
-    FALSE = 'False'
-    DEF = 'def'
-    FOR = 'for'
     IF = 'if'
-    IN = 'in'
+    INT = 'int'
     RETURN = 'return'
-    SELF = 'self'
-    TRUE = 'True'
+    VOID = 'void'
     WHILE = 'while'
-    PRINT = 'print'
-    RANGE = 'range'
-    LEN = 'len'
-    NONE = 'None'
 
-    # Assignment operators
-    DivEqual = '/='
-    Equal = '='
-    MinusEqual = '-='
-    PlusEqual = '+='
-    MulEqual = '*='
+    # Literals
+    Identifier = 'ID'
+    Number = 'NUMBER'
+    Keyword = 'KEYWORD'
+    Delimiter = 'DELIMITER'
+    Operator = 'OPERATOR'
 
-    # Arithmetic operators
-    Plus = '+'
-    Minus = '-'
-    Mul = '*'
-    Div = '/'
+    # Delimiters
+    Colon = ','
+    SemiColon = ';'
+    LeftBrace = '{'
+    LeftBracket = '['
+    LeftParen = '('
+    RightBrace = '}'
+    RightBracket = ']'
+    RightParen = ')'
 
     # Comparison operators
     DoubleEqual = '=='
@@ -40,29 +34,14 @@ class TokenType(Enum):
     Less = '<'
     LessOrEqual = '<='
     NotEqual = '!='
+    Equal = '='
 
-    # Boolean operators
-    And = 'and'
-    Not = 'not'
-    Or = 'or'
-
-    # Literals
-    Identifier = 'IDENTIFIER'
-    String = 'STRING'
-    Number = 'NUMBER'
-    Keyword = 'KEYWORD'
-
-    # Delimiters
-    Colon = ':'
-    Comma = ','
-    LeftBrace = '{'
-    LeftBracket = '['
-    LeftParen = '('
-    Newline = 'NewLine'
-    Tab = 'Tab'
-    RightBrace = '}'
-    RightBracket = ']'
-    RightParen = ')'
+    # Arithmetic operators
+    Plus = '+'
+    Minus = '-'
+    Mul = '*'
+    Div = '/'
 
     # Special tokens
     EndOfInput = 'EndOfInput'
+    Newline = 'NewLine'
