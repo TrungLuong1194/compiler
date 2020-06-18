@@ -44,7 +44,9 @@ class Follow:
                                 break
                             else:
                                 if 'e' not in self.first_set[self.grammar.rule[i].right_side[j]]:
-                                    tmp.append(self.first_set[self.grammar.rule[i].right_side[j]])
+                                    for ele in self.first_set[self.grammar.rule[i].right_side[j]]:
+                                        if ele not in tmp:
+                                            tmp.append(ele)
                                     break
                                 else:
                                     for ele in self.first_set[self.grammar.rule[i].right_side[j]]:
@@ -66,6 +68,7 @@ class Follow:
                                 pass
                             else:
                                 tmp = list(set().union(tmp, follow_dict[self.grammar.rule[i].left_side]))
+
                                 if self.grammar.rule[i].right_side[count] not in follow_dict:
                                     follow_dict[self.grammar.rule[i].right_side[count]] = tmp
                                     flag = True

@@ -100,7 +100,7 @@ class Lexer:
             if self.input[self.position + i] != value[i]:
                 return None
 
-        token.initValue(TokenType.Keyword.name, value, self.line, self.column + 1)
+        token.initValue(value, value, self.line, self.column + 1)
 
         return token
 
