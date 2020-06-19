@@ -3,15 +3,12 @@ from enum import Enum
 
 class State(Enum):
     # -------- State for Number ---------
-    Initial = 1
-    Integer = 2
-    BeginNumberWithFractionPart = 3
-    NumberWithFractionPart = 4
+    InitialNumber = 1
+    FinalNumber = 2
     NoNextState = -1
 
-    # -------- State for String ---------
-    # Initial = 1
-    OpenString = 2
-    String = 3
+    # -------- State for Identifier ---------
+    InitialID = 1
+    FinalID = 2
     # NoNextState = -1
 

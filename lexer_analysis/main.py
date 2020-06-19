@@ -1,6 +1,6 @@
 from lexer_analysis.lexer.lexer import Lexer
 
-file = open('input.py', 'r')
+file = open('lib/input.txt', 'r')
 
 lexer = Lexer(file.read())
 tokens = lexer.tokenize()

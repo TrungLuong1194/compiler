@@ -36,14 +36,8 @@ class Lexer:
         if util.isLetter(character):
             return self.recognizeKeywordOrIdentifier()
 
-        if util.isBeginningOfIdentifier(character):
-            return self.recognizeIdentifier()
-
-        if util.isBeginningOfNumber(character):
+        if util.isDigit(character):
             return self.recognizeNumber()
-
-        if util.isBeginningOfString(character):
-            return self.recognizeString()
 
         if util.isComparisonOperator(character):
             return self.recognizeComparisonOperator()
@@ -89,7 +83,7 @@ class Lexer:
             if token:
                 offset = len(token.value)
 
-                if util.isIdentifierPart(self.input[self.position + offset]):
+                if util.isLetter(self.input[self.position + offset]):
                     return None
 
                 self.position += offset
@@ -106,29 +100,47 @@ class Lexer:
             if self.input[self.position + i] != value[i]:
                 return None
 
-        token.initValue(TokenType.Keyword.name, value, self.line, self.column + 1)
+        token.initValue(value, value, self.line, self.column + 1)
 
         return token
 
     def recognizeIdentifier(self):
         token = Token()
-        identifier = ''
+
+        fsm = self.buildIdentifierRecognizer()
+        recognized, ID = fsm.run(self.input[self.position:])
 
         column = self.column + 1
 
-        while self.position < len(self.input):
-            character = self.input[self.position]
+        if not recognized:
+            raise Exception(str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized identifier literal.')
 
-            if not util.isIdentifierPart(character):
-                break
+        self.position += len(ID)
+        self.column += len(ID)
 
-            identifier += character
-            self.position += 1
-            self.column += 1
-
-        token.initValue(TokenType.Identifier.value, identifier, self.line, column)
+        token.initValue(TokenType.Identifier.name, ID, self.line, column)
 
         return token
+
+    def buildIdentifierRecognizer(self):
+        """
+        letter     = [a-Z]
+        ID         = letter letter*
+        """
+        fsm = FSM()
+
+        fsm.states = [State.InitialID.value, State.FinalID.value]
+
+        fsm.initialState = State.InitialID.value
+
+        fsm.acceptingStates = [State.FinalID.value]
+
+        fsm.nextState = lambda currentState, character: \
+            State.FinalID.value if (currentState == State.InitialID.value and util.isLetter(character)) else \
+                State.FinalID.value if (currentState == State.FinalID.value and util.isLetter(character)) else \
+                    State.NoNextState.value
+
+        return fsm
 
     def recognizeNumber(self):
         token = Token()
@@ -151,70 +163,20 @@ class Lexer:
     def buildNumberRecognizer(self):
         """
         digit      = [0-9]
-        digits     = digit digit*
-        fraction   = .digits | eps
-        number     = digits fraction
+        number     = digit digit*
         """
         fsm = FSM()
 
-        fsm.states = [State.Initial.value, State.Integer.value, State.BeginNumberWithFractionPart.value,
-                      State.NumberWithFractionPart.value]
+        fsm.states = [State.InitialNumber.value, State.FinalNumber.value]
 
-        fsm.initialState = State.Initial.value
+        fsm.initialState = State.InitialNumber.value
 
-        fsm.acceptingStates = [State.Integer.value, State.NumberWithFractionPart.value]
-
-        fsm.nextState = lambda currentState, character: \
-            State.Integer.value if (currentState == State.Initial.value and util.isDigit(character)) else \
-                State.Integer.value if (currentState == State.Integer.value and util.isDigit(character)) else \
-                    State.BeginNumberWithFractionPart.value if (
-                            currentState == State.Integer.value and character == '.') else \
-                        State.NumberWithFractionPart.value if (
-                                currentState == State.BeginNumberWithFractionPart.value and util.isDigit(
-                            character)) else \
-                            State.NumberWithFractionPart.value if (
-                                    currentState == State.NumberWithFractionPart.value and util.isDigit(character)) else \
-                                State.NoNextState.value
-
-        return fsm
-
-    def recognizeString(self):
-        token = Token()
-
-        fsm = self.buildStringRecognizer()
-        recognized, string = fsm.run(self.input[self.position:])
-
-        column = self.column + 1
-
-        if not recognized:
-            raise Exception('Line ' + str(self.line) + ' - ' + 'Invalid string literal.')
-
-        self.position += len(string)
-        self.column += len(string)
-
-        token.initValue(TokenType.String.name, string, self.line, column)
-
-        return token
-
-    def buildStringRecognizer(self):
-        """
-        id      = digit | letter | '_' | operator
-        string  = "id*"
-        """
-        fsm = FSM()
-
-        fsm.states = [State.Initial.value, State.OpenString.value, State.String.value]
-
-        fsm.initialState = State.Initial.value
-
-        fsm.acceptingStates = [State.String.value]
+        fsm.acceptingStates = [State.FinalNumber.value]
 
         fsm.nextState = lambda currentState, character: \
-            State.OpenString.value if (currentState == State.Initial.value and character == '"') else \
-                State.OpenString.value if (
-                        currentState == State.OpenString.value and util.isIdentifierPart(character)) else \
-                    State.String.value if (currentState == State.OpenString.value and character == '"') else \
-                        State.NoNextState.value
+            State.FinalNumber.value if (currentState == State.InitialNumber.value and util.isDigit(character)) else \
+                State.FinalNumber.value if (currentState == State.FinalNumber.value and util.isDigit(character)) else \
+                    State.NoNextState.value
 
         return fsm
 
@@ -253,18 +215,25 @@ class Lexer:
                 return token
         elif character == '=':
             if isLookaheadEqualSymbol:
-                token.initValue(TokenType.DoubleEqual.name, TokenType.DoubleEqual.value, self.line, column)
-                return token
+                raise Exception(
+                    str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
             else:
                 token.initValue(TokenType.Equal.name, TokenType.Equal.value, self.line, column)
                 return token
-        elif character == '!':
+        elif character == ':':
             if isLookaheadEqualSymbol:
-                token.initValue(TokenType.NotEqual.name, TokenType.NotEqual.value, self.line, column)
+                token.initValue(TokenType.Assign.name, TokenType.Assign.value, self.line, column)
                 return token
             else:
                 raise Exception(
                     str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
+        elif character == '#':
+            if isLookaheadEqualSymbol:
+                raise Exception(
+                    str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
+            else:
+                token.initValue(TokenType.NotEqual.name, TokenType.NotEqual.value, self.line, column)
+                return token
         else:
             raise Exception(
                 str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
@@ -299,29 +268,20 @@ class Lexer:
         self.position += 1
         self.column += 1
 
-        if character == '{':
-            token.initValue(TokenType.LeftBrace.name, TokenType.LeftBrace.value, self.line, self.column)
-            return token
-        elif character == '}':
-            token.initValue(TokenType.RightBrace.name, TokenType.RightBrace.value, self.line, self.column)
-            return token
-        elif character == '[':
-            token.initValue(TokenType.LeftBracket.name, TokenType.LeftBracket.value, self.line, self.column)
-            return token
-        elif character == ']':
-            token.initValue(TokenType.RightBracket.name, TokenType.RightBracket.value, self.line, self.column)
-            return token
-        elif character == '(':
+        if character == '(':
             token.initValue(TokenType.LeftParen.name, TokenType.LeftParen.value, self.line, self.column)
             return token
         elif character == ')':
             token.initValue(TokenType.RightParen.name, TokenType.RightParen.value, self.line, self.column)
             return token
         elif character == ',':
-            token.initValue(TokenType.Comma.name, TokenType.Comma.value, self.line, self.column)
-            return token
-        elif character == ':':
             token.initValue(TokenType.Colon.name, TokenType.Colon.value, self.line, self.column)
+            return token
+        elif character == ';':
+            token.initValue(TokenType.SemiColon.name, TokenType.SemiColon.value, self.line, self.column)
+            return token
+        elif character == '.':
+            token.initValue(TokenType.Dot.name, TokenType.Dot.value, self.line, self.column)
             return token
         else:
             raise Exception(

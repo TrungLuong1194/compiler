@@ -44,22 +44,22 @@ class Grammar:
         self.set_production_rules(root)
 
     def display(self):
-        print('Non-terminal symbols: ' + str(len(self.non_terminal)))
+        print('-- Non-terminal symbols: ' + str(len(self.non_terminal)))
         for i in range(len(self.non_terminal)):
             print(self.non_terminal[i])
         print()
 
-        print('Terminal symbols: ' + str(len(self.terminal)))
+        print('-- Terminal symbols: ' + str(len(self.terminal)))
         for i in range(len(self.terminal)):
             print(self.terminal[i])
         print()
 
-        print('Production rules: ' + str(len(self.rule)))
+        print('-- Production rules: ' + str(len(self.rule)))
         for i in range(len(self.rule)):
             print(str(self.rule[i].left_side) + ' ------> ' + str(self.rule[i].right_side))
         print()
 
-        print('Start symbol:')
+        print('-- Start symbol:')
         print(self.start_symbol)
         print()
 

@@ -4,7 +4,7 @@ from context_free_grammar.tools.write_xml import WriteXml
 import xml.etree.ElementTree as elementTree
 
 # import xml data
-tree = elementTree.parse('input.xml')
+tree = elementTree.parse('grammar.xml')
 root = tree.getroot()
 
 # setting grammar
