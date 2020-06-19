@@ -215,18 +215,25 @@ class Lexer:
                 return token
         elif character == '=':
             if isLookaheadEqualSymbol:
-                token.initValue(TokenType.DoubleEqual.name, TokenType.DoubleEqual.value, self.line, column)
-                return token
+                raise Exception(
+                    str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
             else:
                 token.initValue(TokenType.Equal.name, TokenType.Equal.value, self.line, column)
                 return token
-        elif character == '!':
+        elif character == ':':
             if isLookaheadEqualSymbol:
-                token.initValue(TokenType.NotEqual.name, TokenType.NotEqual.value, self.line, column)
+                token.initValue(TokenType.Assign.name, TokenType.Assign.value, self.line, column)
                 return token
             else:
                 raise Exception(
                     str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
+        elif character == '#':
+            if isLookaheadEqualSymbol:
+                raise Exception(
+                    str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
+            else:
+                token.initValue(TokenType.NotEqual.name, TokenType.NotEqual.value, self.line, column)
+                return token
         else:
             raise Exception(
                 str(self.line) + ':' + str(column) + ' - ' + 'Unrecognized token ' + str(character))
@@ -261,19 +268,7 @@ class Lexer:
         self.position += 1
         self.column += 1
 
-        if character == '{':
-            token.initValue(TokenType.LeftBrace.name, TokenType.LeftBrace.value, self.line, self.column)
-            return token
-        elif character == '}':
-            token.initValue(TokenType.RightBrace.name, TokenType.RightBrace.value, self.line, self.column)
-            return token
-        elif character == '[':
-            token.initValue(TokenType.LeftBracket.name, TokenType.LeftBracket.value, self.line, self.column)
-            return token
-        elif character == ']':
-            token.initValue(TokenType.RightBracket.name, TokenType.RightBracket.value, self.line, self.column)
-            return token
-        elif character == '(':
+        if character == '(':
             token.initValue(TokenType.LeftParen.name, TokenType.LeftParen.value, self.line, self.column)
             return token
         elif character == ')':
@@ -284,6 +279,9 @@ class Lexer:
             return token
         elif character == ';':
             token.initValue(TokenType.SemiColon.name, TokenType.SemiColon.value, self.line, self.column)
+            return token
+        elif character == '.':
+            token.initValue(TokenType.Dot.name, TokenType.Dot.value, self.line, self.column)
             return token
         else:
             raise Exception(

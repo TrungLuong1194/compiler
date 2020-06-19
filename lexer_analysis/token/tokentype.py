@@ -3,38 +3,39 @@ from enum import Enum
 
 class TokenType(Enum):
     # Keywords
-    ELSE = 'else'
-    IF = 'if'
-    INT = 'int'
-    RETURN = 'return'
-    VOID = 'void'
-    WHILE = 'while'
+    Const = 'const'
+    Var = 'var'
+    Procedure = 'procedure'
+    Call = 'call'
+    Begin = 'begin'
+    End = 'end'
+    If = 'if'
+    Then = 'then'
+    While = 'while'
+    Do = 'do'
+    Odd = 'odd'
+    Write = 'write'
+    Read = 'read'
 
     # Literals
-    Identifier = 'ID'
-    Number = 'NUMBER'
-    Keyword = 'KEYWORD'
-    Delimiter = 'DELIMITER'
-    Operator = 'OPERATOR'
+    Identifier = 'identifier'
+    Number = 'number'
 
     # Delimiters
     Colon = ','
     SemiColon = ';'
-    LeftBrace = '{'
-    LeftBracket = '['
+    Dot = '.'
     LeftParen = '('
-    RightBrace = '}'
-    RightBracket = ']'
     RightParen = ')'
 
     # Comparison operators
-    DoubleEqual = '=='
     Greater = '>'
     GreaterOrEqual = '>='
     Less = '<'
     LessOrEqual = '<='
-    NotEqual = '!='
+    NotEqual = '#'
     Equal = '='
+    Assign = ':='
 
     # Arithmetic operators
     Plus = '+'

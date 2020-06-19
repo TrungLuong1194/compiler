@@ -7,7 +7,7 @@ from lexer_analysis.lexer.lexer import Lexer
 import xml.etree.ElementTree as elementTree
 
 # import xml data
-tree = elementTree.parse('CMinusGrammar.xml')
+tree = elementTree.parse('lib/PL0Grammar.xml')
 root = tree.getroot()
 
 # setting grammar
@@ -53,13 +53,15 @@ parse_table = ParseTable(grammar)
 df, parse_table = parse_table.transform()
 print(df)
 # print(parse_table)
+# for i, v in parse_table.items():
+#     print(str(i) + '-' + str(v))
 
 # parser transform
 print('-' * 80)
 print('Parse Transform:')
 print('-' * 80)
 
-file = open('input.c', 'r')
+file = open('lib/input.txt', 'r')
 
 lexer = Lexer(file.read())
 tokens = lexer.tokenize()

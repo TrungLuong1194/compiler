@@ -15,8 +15,7 @@ def isWhitespace(char):
 
 
 def isDelimiter(char):
-    return char == '{' or char == '[' or char == '(' or char == '}' or \
-           char == ']' or char == ')' or char == ',' or char == ';'
+    return char == '(' or char == ')' or char == ',' or char == ';' or char == '.'
 
 
 def isNewLine(char):
@@ -24,7 +23,7 @@ def isNewLine(char):
 
 
 def isComparisonOperator(char):
-    return char == '=' or char == '>' or char == '<' or char == '!'
+    return char == '=' or char == '>' or char == '<' or char == ':' or char == '#'
 
 
 def isArithmeticOperator(char):
