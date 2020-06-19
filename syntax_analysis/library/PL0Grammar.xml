@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar name="G">
+    <terminalsymbols>
+        <term name="const"/>
+        <term name="var"/>
+        <term name="procedure"/>
+        <term name="call"/>
+        <term name="begin"/>
+        <term name="end"/>
+        <term name="if"/>
+        <term name="then"/>
+        <term name="while"/>
+        <term name="do"/>
+        <term name="odd"/>
+        <term name="write"/>
+        <term name="read"/>
+
+        <term name="Identifier"/>
+        <term name="Number"/>
+
+        <term name="Colon"/>
+        <term name="SemiColon"/>
+        <term name="Dot"/>
+        <term name="LeftParen"/>
+        <term name="RightParen"/>
+
+        <term name="Greater"/>
+        <term name="GreaterOrEqual"/>
+        <term name="Less"/>
+        <term name="LessOrEqual"/>
+        <term name="NotEqual"/>
+        <term name="Equal"/>
+        <term name="Assign"/>
+
+        <term name="Plus"/>
+        <term name="Minus"/>
+        <term name="Mul"/>
+        <term name="Div"/>
+
+        <term name="e"/>
+    </terminalsymbols>
+    <nonterminalsymbols>
+        <nonterm name="program"/>
+        <nonterm name="block"/>
+        <nonterm name="const_add"/>
+        <nonterm name="var_add"/>
+        <nonterm name="procedure_add"/>
+        <nonterm name="statement"/>
+        <nonterm name="begin_add"/>
+        <nonterm name="condition"/>
+        <nonterm name="operator"/>
+        <nonterm name="expression"/>
+        <nonterm name="addminus"/>
+        <nonterm name="term"/>
+        <nonterm name="muldiv"/>
+        <nonterm name="factor"/>
+    </nonterminalsymbols>
+    <productions>
+
+        <production>
+            <lhs name="program"/>
+            <rhs>
+                <symbol type="nonterm" name="block"/>
+                <symbol type="term" name="Dot"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="block"/>
+            <rhs>
+                <symbol type="term" name="const"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="term" name="Equal"/>
+                <symbol type="term" name="Number"/>
+                <symbol type="nonterm" name="const_add"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="term" name="var"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="nonterm" name="var_add"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="procedure_add"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="block"/>
+            <rhs>
+                <symbol type="term" name="const"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="term" name="Equal"/>
+                <symbol type="term" name="Number"/>
+                <symbol type="nonterm" name="const_add"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="procedure_add"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="block"/>
+            <rhs>
+                <symbol type="term" name="var"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="nonterm" name="var_add"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="procedure_add"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="block"/>
+            <rhs>
+                <symbol type="nonterm" name="procedure_add"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="const_add"/>
+            <rhs>
+                <symbol type="term" name="Colon"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="term" name="Equal"/>
+                <symbol type="term" name="Number"/>
+                <symbol type="nonterm" name="const_add"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="const_add"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="var_add"/>
+            <rhs>
+                <symbol type="term" name="Colon"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="nonterm" name="var_add"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="var_add"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="procedure_add"/>
+            <rhs>
+                <symbol type="term" name="procedure"/>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="block"/>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="procedure_add"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="procedure_add"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="Identifier"/>
+                <symbol type="term" name="Assign"/>
+                <symbol type="nonterm" name="expression"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="call"/>
+                <symbol type="term" name="Identifier"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="read"/>
+                <symbol type="term" name="Identifier"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="write"/>
+                <symbol type="nonterm" name="expression"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="begin"/>
+                <symbol type="nonterm" name="statement"/>
+                <symbol type="nonterm" name="begin_add"/>
+                <symbol type="term" name="end"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="if"/>
+                <symbol type="nonterm" name="condition"/>
+                <symbol type="term" name="then"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="while"/>
+                <symbol type="nonterm" name="condition"/>
+                <symbol type="term" name="do"/>
+                <symbol type="nonterm" name="statement"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="statement"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="begin_add"/>
+            <rhs>
+                <symbol type="term" name="SemiColon"/>
+                <symbol type="nonterm" name="statement"/>
+                <symbol type="nonterm" name="begin_add"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="begin_add"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="condition"/>
+            <rhs>
+                <symbol type="term" name="odd"/>
+                <symbol type="nonterm" name="expression"/>
+            </rhs>
+        </production>
+
+         <production>
+            <lhs name="condition"/>
+            <rhs>
+                <symbol type="nonterm" name="expression"/>
+                <symbol type="nonterm" name="operator"/>
+                <symbol type="nonterm" name="expression"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="Equal"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="NotEqual"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="Less"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="LessOrEqual"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="Greater"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="operator"/>
+            <rhs>
+                <symbol type="term" name="GreaterOrEqual"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="expression"/>
+            <rhs>
+                <symbol type="term" name="Plus"/>
+                <symbol type="nonterm" name="term"/>
+                <symbol type="nonterm" name="addminus"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="expression"/>
+            <rhs>
+                <symbol type="term" name="Minus"/>
+                <symbol type="nonterm" name="term"/>
+                <symbol type="nonterm" name="addminus"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="expression"/>
+            <rhs>
+                <symbol type="nonterm" name="term"/>
+                <symbol type="nonterm" name="addminus"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="addminus"/>
+            <rhs>
+                <symbol type="term" name="Plus"/>
+                <symbol type="nonterm" name="term"/>
+                <symbol type="nonterm" name="addminus"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="addminus"/>
+            <rhs>
+                <symbol type="term" name="Minus"/>
+                <symbol type="nonterm" name="term"/>
+                <symbol type="nonterm" name="addminus"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="addminus"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="term"/>
+            <rhs>
+                <symbol type="nonterm" name="factor"/>
+                <symbol type="nonterm" name="muldiv"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="muldiv"/>
+            <rhs>
+                <symbol type="term" name="Mul"/>
+                <symbol type="nonterm" name="factor"/>
+                <symbol type="nonterm" name="muldiv"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="muldiv"/>
+            <rhs>
+                <symbol type="term" name="Div"/>
+                <symbol type="nonterm" name="factor"/>
+                <symbol type="nonterm" name="muldiv"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="muldiv"/>
+            <rhs>
+                <symbol type="term" name="e"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="factor"/>
+            <rhs>
+                <symbol type="term" name="Identifier"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="factor"/>
+            <rhs>
+                <symbol type="term" name="Number"/>
+            </rhs>
+        </production>
+
+        <production>
+            <lhs name="factor"/>
+            <rhs>
+                <symbol type="term" name="LeftParen"/>
+                <symbol type="nonterm" name="expression"/>
+                <symbol type="term" name="RightParen"/>
+            </rhs>
+        </production>
+
+    </productions>
+    <startsymbol name="program"/>
+</grammar>
