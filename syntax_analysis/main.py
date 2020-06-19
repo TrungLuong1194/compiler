@@ -7,7 +7,7 @@ from lexer_analysis.lexer.lexer import Lexer
 import xml.etree.ElementTree as elementTree
 
 # import xml data
-tree = elementTree.parse('lib/PL0Grammar.xml')
+tree = elementTree.parse('library/PL0Grammar.xml')
 root = tree.getroot()
 
 # setting grammar
@@ -61,7 +61,7 @@ print('-' * 80)
 print('Parse Transform:')
 print('-' * 80)
 
-file = open('lib/input.txt', 'r')
+file = open('library/input.txt', 'r')
 
 lexer = Lexer(file.read())
 tokens = lexer.tokenize()
