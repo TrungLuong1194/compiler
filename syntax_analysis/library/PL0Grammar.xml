@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar name="G">
     <terminalsymbols>
-        <term name="const"/>
         <term name="var"/>
         <term name="procedure"/>
         <term name="call"/>
@@ -42,7 +41,6 @@
     <nonterminalsymbols>
         <nonterm name="program"/>
         <nonterm name="block"/>
-        <nonterm name="const_add"/>
         <nonterm name="var_add"/>
         <nonterm name="procedure_add"/>
         <nonterm name="statement"/>
@@ -68,38 +66,6 @@
         <production>
             <lhs name="block"/>
             <rhs>
-                <symbol type="term" name="const"/>
-                <symbol type="term" name="Identifier"/>
-                <symbol type="term" name="Equal"/>
-                <symbol type="term" name="Number"/>
-                <symbol type="nonterm" name="const_add"/>
-                <symbol type="term" name="SemiColon"/>
-                <symbol type="term" name="var"/>
-                <symbol type="term" name="Identifier"/>
-                <symbol type="nonterm" name="var_add"/>
-                <symbol type="term" name="SemiColon"/>
-                <symbol type="nonterm" name="procedure_add"/>
-                <symbol type="nonterm" name="statement"/>
-            </rhs>
-        </production>
-
-        <production>
-            <lhs name="block"/>
-            <rhs>
-                <symbol type="term" name="const"/>
-                <symbol type="term" name="Identifier"/>
-                <symbol type="term" name="Equal"/>
-                <symbol type="term" name="Number"/>
-                <symbol type="nonterm" name="const_add"/>
-                <symbol type="term" name="SemiColon"/>
-                <symbol type="nonterm" name="procedure_add"/>
-                <symbol type="nonterm" name="statement"/>
-            </rhs>
-        </production>
-
-        <production>
-            <lhs name="block"/>
-            <rhs>
                 <symbol type="term" name="var"/>
                 <symbol type="term" name="Identifier"/>
                 <symbol type="nonterm" name="var_add"/>
@@ -114,24 +80,6 @@
             <rhs>
                 <symbol type="nonterm" name="procedure_add"/>
                 <symbol type="nonterm" name="statement"/>
-            </rhs>
-        </production>
-
-        <production>
-            <lhs name="const_add"/>
-            <rhs>
-                <symbol type="term" name="Colon"/>
-                <symbol type="term" name="Identifier"/>
-                <symbol type="term" name="Equal"/>
-                <symbol type="term" name="Number"/>
-                <symbol type="nonterm" name="const_add"/>
-            </rhs>
-        </production>
-
-        <production>
-            <lhs name="const_add"/>
-            <rhs>
-                <symbol type="term" name="e"/>
             </rhs>
         </production>
 

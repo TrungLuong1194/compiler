@@ -1,0 +1,44 @@
+program = block "."
+
+block = "var" ident var_add ";" procedure_add statement
+      
+      = procedure_add statement
+
+var_add = "," ident var_add | e
+
+procedure_add = "procedure" ident ";" block ";" procedure_add | e
+
+statement = ident ":=" expression
+		  
+		  = "call" ident
+		  
+		  = read ident
+		  
+		  = write expression
+		  
+		  = "begin" statement begin_add "end"
+		  
+		  = "if" condition "then" statement
+		  
+		  = "while" condition "do" statement
+		  
+		  = e
+
+begin_add = ";" statement begin_add | e
+
+condition = "odd" expression | expression operator expression
+
+operator = ("="|"#"|"<"|"<="|">"|">=")
+            
+expression = ("+"|"-") term addminus
+           
+           = term addminus
+
+addminus = ("+"|"-") term addminus | e
+
+term = factor muldiv
+
+muldiv = ("*"|"/") factor muldiv | e
+
+factor = ident | number | "(" expression ")"
+
