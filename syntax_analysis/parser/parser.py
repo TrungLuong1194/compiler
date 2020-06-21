@@ -5,6 +5,8 @@ class Parser:
         self.tokens = tokens
 
     def transform(self):
+        syntax_tree = []
+
         tokens_list = []
         for ele in self.tokens:
             if ele.typeToken not in ['NewLine', 'EndOfInput']:
@@ -21,7 +23,7 @@ class Parser:
         print(tokens_list)
         print('\n')
         # print(stack)
-        print('-- Parser tree:')
+        print('-- Check syntax:')
 
         index = 0
 
@@ -36,6 +38,9 @@ class Parser:
             print('Current_token --> ' + str(current_token))
 
             if top == current_token:
+
+                syntax_tree.append((top, current_token))
+
                 stack.pop()
                 index += 1
             else:
@@ -47,6 +52,9 @@ class Parser:
                     break
 
                 value = self.grammar.rule[self.parse_table[key] - 1].right_side
+
+                syntax_tree.append((top, value))
+
                 if value != ['e']:
                     value = value[::-1]
 
@@ -61,3 +69,5 @@ class Parser:
             print('Token accepted!')
         else:
             print('Token not accepted!')
+
+        return syntax_tree

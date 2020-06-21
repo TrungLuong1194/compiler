@@ -67,4 +67,9 @@ lexer = Lexer(file.read())
 tokens = lexer.tokenize()
 
 parser = Parser(grammar, parse_table, tokens)
-parser.transform()
+syntax_tree = parser.transform()
+
+print('\n')
+print('-- Parser tree:')
+for ele in syntax_tree:
+    print(ele)
