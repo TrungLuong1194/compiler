@@ -1,8 +1,8 @@
 from context_free_grammar.grammar_settings.grammar import Grammar
-from syntax_analysis.LL1.first import First
-from syntax_analysis.LL1.follow import Follow
-from syntax_analysis.LL1.parse_table import ParseTable
-from syntax_analysis.parser.parser import Parser
+from syntax_analysis_cst.LL1.first import First
+from syntax_analysis_cst.LL1.follow import Follow
+from syntax_analysis_cst.LL1.parse_table import ParseTable
+from syntax_analysis_cst.parser.parser import Parser
 from lexer_analysis.lexer.lexer import Lexer
 import xml.etree.ElementTree as elementTree
 

@@ -1,8 +1,14 @@
 var x, squ;
 
 procedure square;
+var y;
+    procedure squarea;
+        y := x;
+y := 1;
+
+procedure squareb;
 begin
-    squ:= x * x
+    x := x * 1
 end;
 
 begin

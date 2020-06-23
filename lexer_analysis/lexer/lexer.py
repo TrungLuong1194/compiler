@@ -19,7 +19,8 @@ class Lexer:
         while token.typeToken != TokenType.EndOfInput.value:
             token = self.nextToken()
 
-            tokens.append(token)
+            if token.typeToken != TokenType.Newline.value:
+                tokens.append(token)
 
         return tokens
 
