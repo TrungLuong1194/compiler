@@ -307,7 +307,6 @@ class Parser:
                 raise Exception("Procedure declaration: ';' second don't matching" + ' - ' + str(token.line))
 
             node = ast.Procedure(identifier, block)
-
         else:
             raise Exception("Procedure declaration: 'procedure' don't matching" + ' - ' + str(token.line))
 

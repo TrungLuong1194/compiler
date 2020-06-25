@@ -3,7 +3,7 @@ from semantic_analysis.symbol_table.symbol_table import SymbolTable
 from semantic_analysis.symbol_table.symbol import Symbol
 
 
-class SymbolTableBuilder(NodeVisitor):
+class Semantic(NodeVisitor):
     def __init__(self):
         self.symtab = SymbolTable()
 
@@ -61,6 +61,11 @@ class SymbolTableBuilder(NodeVisitor):
     def visit_VarDec(self, node):
         for ident in node.ident_list:
             symbol = Symbol(ident.value)
+
+            symbol_find = self.symtab.lookup(symbol)
+            if symbol_find is not None:
+                raise Exception("Duplicate identifier '" + symbol.name + "'")
+
             self.symtab.define(symbol)
 
     def visit_Procedure(self, node):

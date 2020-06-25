@@ -2,11 +2,11 @@ class SymbolTable:
     def __init__(self):
         self.symbol_table = {}
 
-    def __str__(self):
-        s = 'Symbols: {symbols}'.format(
-            symbols=[value for value in self.symbol_table.values()]
-        )
-        return s
+    def display(self):
+        print('_' * 30)
+        print('Symbol table:')
+        for k, v in self.symbol_table.items():
+            print(str(k) + ': <' + str(v.name) + '>')
 
     def define(self, symbol):
         print('Define: ' + symbol.name)
