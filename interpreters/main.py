@@ -1,6 +1,6 @@
 from lexer_analysis.lexer.lexer import Lexer
 from syntax_analysis_ast.parser.parser import Parser
-from interpreter_step.interpreter import Interpreter
+from interpreters.interpreter.interpreter import Interpreter
 
 file = open('library/input.txt', 'r')
 lexer = Lexer(file.read())
