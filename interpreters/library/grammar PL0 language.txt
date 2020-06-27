@@ -1,0 +1,27 @@
+program = block "."
+
+block = [ "var" ident { "," ident } ";" ] { "procedure" ident ";" block ";" } statement
+
+statement = [ ident ":=" expression
+            | "call" ident
+            | "read" ident
+            | "write" expression
+            | "begin" statement { ";" statement } "end"
+            | "if" condition "then" statement
+            | "while" condition "do" statement ]
+
+condition = "odd" expression
+            | expression ( "="|"#"|"<"|"<="|">"|">=" ) expression
+
+expression = [ "+"|"-" ] term { ( "+"|"-" ) term }
+
+term = factor { ( "*"|"/" ) factor }
+
+factor = ident
+         | number
+         | "(" expression ")"
+
+-------------------------------------------------------------------------------------
+Note:
+[ … ] : Optional. The rule between the square brackets may or may not be used. (zero or one time)
+{ … } : Repetition. The rule between the curly braces may be used zero or more times.

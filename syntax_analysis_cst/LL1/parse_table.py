@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from syntax_analysis.LL1.first import First
-from syntax_analysis.LL1.follow import Follow
+from syntax_analysis_cst.LL1.first import First
+from syntax_analysis_cst.LL1.follow import Follow
 
 
 class ParseTable:

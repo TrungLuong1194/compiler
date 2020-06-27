@@ -1,0 +1,15 @@
+var a, b;
+
+begin
+    a := 1;
+    b := 4;
+
+    if a > 2 then b := b + 2;
+    write b;
+
+    while a > -1 do
+    begin
+        write a;
+        a := a - 1;
+    end
+end.
