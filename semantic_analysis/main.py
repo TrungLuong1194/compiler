@@ -8,6 +8,7 @@ tokens = lexer.tokenize()
 
 parser = Parser(tokens)
 tree = parser.parse()
+print('\n')
 
 semantic = Semantic()
 try:
@@ -15,4 +16,4 @@ try:
 except Exception as e:
     print(e)
 
-semantic.symtab.display()
+# semantic.current_scope.display()

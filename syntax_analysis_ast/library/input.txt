@@ -5,6 +5,11 @@ begin
     squ := x * x
 end;
 
+procedure circle;
+begin
+    squ := x * x
+end;
+
 begin
     x := 1;
     while x <= 10 do

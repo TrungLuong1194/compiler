@@ -82,6 +82,8 @@ class Call(AST):
 
     def __init__(self, identifier):
         self.identifier = identifier
+        # a reference to procedure declaration symbol
+        self.proc_symbol = None
 
 
 class Odd(AST):
@@ -150,7 +152,7 @@ class VarDec(AST):
         self.ident_list = ident_list
 
 
-class Procedure(AST):
+class ProcDec(AST):
     """
     Represent a Procedure
     Ex: "procedure" ident ";" block ";"
@@ -167,9 +169,9 @@ class Block(AST):
     Ex: block = const_declaration var_declaration procedure statement
     """
 
-    def __init__(self, var_declaration, procedure_declaration, statement):
+    def __init__(self, var_declaration, procedure_declaration_list, statement):
         self.var_declaration = var_declaration
-        self.procedure_declaration = procedure_declaration
+        self.procedure_declaration_list = procedure_declaration_list
         self.statement = statement
 
 
