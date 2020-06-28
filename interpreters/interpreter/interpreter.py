@@ -75,7 +75,9 @@ class Interpreter(NodeVisitor):
         ar[node.identifier.value] = self.visit(node.expression)
 
     def visit_Call(self, node):
-        pass
+        proc_name = node.identifier.value
+        print(proc_name)
+        # ar = ActivationRecord(name=proc_name, type=ARType.PROCEDURE,  nesting_level=2)
 
     def visit_Odd(self, node):
         pass
