@@ -306,7 +306,7 @@ class Parser:
             else:
                 raise Exception("Procedure declaration: ';' second don't matching" + ' - ' + str(token.line))
 
-            node = ast.Procedure(identifier, block)
+            node = ast.ProcDec(identifier, block)
         else:
             raise Exception("Procedure declaration: 'procedure' don't matching" + ' - ' + str(token.line))
 
@@ -321,14 +321,14 @@ class Parser:
         if self.current_token.typeToken == TokenType.Var.value:
             var_declaration = self.var_declaration()
 
-        procedure_declaration = ast.NoOp()
+        procedure_declaration_list = []
 
         while self.current_token.typeToken == TokenType.Procedure.value:
-            procedure_declaration = self.procedure_declaration()
+            procedure_declaration_list.append(self.procedure_declaration())
 
         statement = self.statement()
 
-        return ast.Block(var_declaration, procedure_declaration, statement)
+        return ast.Block(var_declaration, procedure_declaration_list, statement)
 
     def program(self):
         """
