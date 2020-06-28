@@ -35,7 +35,7 @@ class Semantic(NodeVisitor):
         self.visit(node.expression)
 
     def visit_Call(self, node):
-        pass
+        self.visit(node.identifier)
 
     def visit_Odd(self, node):
         pass

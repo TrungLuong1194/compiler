@@ -13,5 +13,5 @@ var x, squ;
     end;
 
 begin
-
+    call circle;
 end.

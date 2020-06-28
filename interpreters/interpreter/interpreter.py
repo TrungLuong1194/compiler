@@ -1,18 +1,22 @@
 from lexer_analysis.token.tokentype import TokenType
 from semantic_analysis.node_visitor.node_visitor import NodeVisitor
+from interpreters.tools.call_stack import CallStack
+from interpreters.tools.activation_record import ActivationRecord
+from interpreters.tools.artype import ARType
 
 
 class Interpreter(NodeVisitor):
-    GLOBAL_SCOPE = {}
-
-    def __init__(self, parser):
-        self.parser = parser
+    def __init__(self, tree):
+        self.tree = tree
+        self.call_stack = CallStack()
 
     def visit_Number(self, node):
         return node.value
 
     def visit_Identifier(self, node):
-        return self.GLOBAL_SCOPE[node.value]
+        ar = self.call_stack.peek()
+
+        return ar.get(node.value)
 
     def visit_BinOp(self, node):
         if node.op.typeToken == TokenType.Plus.name:
@@ -66,7 +70,9 @@ class Interpreter(NodeVisitor):
                 return False
 
     def visit_Assign(self, node):
-        self.GLOBAL_SCOPE[node.identifier.value] = self.visit(node.expression)
+        ar = self.call_stack.peek()
+
+        ar[node.identifier.value] = self.visit(node.expression)
 
     def visit_Call(self, node):
         pass
@@ -78,7 +84,8 @@ class Interpreter(NodeVisitor):
         pass
 
     def visit_Write(self, node):
-        print(self.visit(node.expression))
+        # print(self.visit(node.expression))
+        pass
 
     def visit_BeginEnd(self, node):
         for ele in node.statement_list:
@@ -95,19 +102,32 @@ class Interpreter(NodeVisitor):
     def visit_VarDec(self, node):
         pass
 
-    def visit_Procedure(self, node):
+    def visit_ProcDec(self, node):
         pass
 
     def visit_Block(self, node):
         self.visit(node.var_declaration)
-        self.visit(node.procedure_declaration)
+        for ele in node.procedure_declaration_list:
+            self.visit(ele)
         self.visit(node.statement)
 
     def visit_Program(self, node):
+        print('ENTER: PROGRAM')
+
+        ar = ActivationRecord(name='program', type=ARType.PROGRAM, nesting_level=1)
+        self.call_stack.push(ar)
+
+        print(self.call_stack)
+
         self.visit(node.block)
 
+        print('LEAVE: PROGRAM')
+        print(self.call_stack)
+
+        self.call_stack.pop()
+
     def interpret(self):
-        tree = self.parser.parse()
+        tree = self.tree
 
         if tree is None:
             return ''
