@@ -1,6 +1,6 @@
 from semantic_analysis.node_visitor.node_visitor import NodeVisitor
 from semantic_analysis.symbol_table.scoped_symbol_table import ScopedSymbolTable
-from semantic_analysis.symbol_table.symbol import Symbol
+from semantic_analysis.symbol_table.symbol import Symbol, ProcedureSymbol
 
 
 class Semantic(NodeVisitor):
@@ -35,7 +35,14 @@ class Semantic(NodeVisitor):
         self.visit(node.expression)
 
     def visit_Call(self, node):
-        self.visit(node.identifier)
+        symbol = ProcedureSymbol(node.identifier.value)
+        proc_symbol = self.current_scope.lookup(symbol)
+
+        if proc_symbol is None:
+            raise Exception("Can't find '" + symbol.name + "'")
+
+        # accessed by the interpreter when executing procedure call
+        node.proc_symbol = proc_symbol
 
     def visit_Odd(self, node):
         pass
@@ -70,8 +77,8 @@ class Semantic(NodeVisitor):
 
     def visit_ProcDec(self, node):
         ident = node.identifier
-        symbol = Symbol(ident.value, 'procedure')
-        self.current_scope.define(symbol)
+        proc_symbol = ProcedureSymbol(ident.value, 'procedure')
+        self.current_scope.define(proc_symbol)
 
         print('ENTER scope: ' + str(ident.value))
         # Scope for parameters and local variables
@@ -86,6 +93,9 @@ class Semantic(NodeVisitor):
 
         print('\n')
         print('LEAVE scope: ' + str(ident.value))
+
+        # accessed by the interpreter when executing procedure call
+        proc_symbol.block_ast = node.block
 
     def visit_Block(self, node):
         self.visit(node.var_declaration)

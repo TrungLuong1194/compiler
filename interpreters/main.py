@@ -5,31 +5,29 @@ from semantic_analysis.semantic.semantic import Semantic
 
 file = open('library/input.txt', 'r')
 lexer = Lexer(file.read())
-
 tokens = lexer.tokenize()
 
+print('-' * 80)
+print('Syntax analysis:')
+print('-' * 80)
 parser = Parser(tokens)
-
 tree = parser.parse()
-print('\n')
-print('-' * 30)
-print('Semantic analysis:')
-semantic = Semantic()
-try:
-    semantic.visit(tree)
-except Exception as e:
-    print(e)
 
 print('\n')
-print('-' * 30)
+print('-' * 80)
+print('Semantic analysis:')
+print('-' * 80)
+semantic = Semantic()
+semantic.visit(tree)
+# try:
+#     semantic.visit(tree)
+# except Exception as e:
+#     print(e)
+
+print('\n')
+print('-' * 80)
 print('Interpreter:')
+print('-' * 80)
 interpreter = Interpreter(tree)
 
 result = interpreter.interpret()
-# print('\n')
-# print('result = ' + str(result))
-#
-# print('\n')
-# print('Run-time GLOBAL_MEMORY contents:')
-# for k, v in sorted(interpreter.GLOBAL_SCOPE.items()):
-#     print('{} = {}'.format(k, v))

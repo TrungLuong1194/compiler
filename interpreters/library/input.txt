@@ -2,7 +2,7 @@ var x, squ;
 
 procedure square;
 begin
-   squ := x * x
+   squ := x + 3;
 end;
 
 begin
@@ -10,7 +10,6 @@ begin
    while x <= 10 do
    begin
       call square;
-      write squ;
       x := x + 1
    end
 end.

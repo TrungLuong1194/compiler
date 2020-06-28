@@ -76,8 +76,21 @@ class Interpreter(NodeVisitor):
 
     def visit_Call(self, node):
         proc_name = node.identifier.value
-        print(proc_name)
-        # ar = ActivationRecord(name=proc_name, type=ARType.PROCEDURE,  nesting_level=2)
+        # ar = ActivationRecord(name=proc_name, type=ARType.PROCEDURE, nesting_level=2)
+
+        proc_symbol = node.proc_symbol
+
+        # self.call_stack.push(ar)
+
+        print('ENTER: PROCEDURE ' + str(proc_name))
+        print(self.call_stack)
+
+        self.visit(proc_symbol.block_ast)
+
+        print('LEAVE: PROCEDURE ' + str(proc_name))
+        print(self.call_stack)
+
+        # self.call_stack.pop()
 
     def visit_Odd(self, node):
         pass

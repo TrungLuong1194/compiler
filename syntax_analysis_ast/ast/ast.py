@@ -82,6 +82,8 @@ class Call(AST):
 
     def __init__(self, identifier):
         self.identifier = identifier
+        # a reference to procedure declaration symbol
+        self.proc_symbol = None
 
 
 class Odd(AST):
