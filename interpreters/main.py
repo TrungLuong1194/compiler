@@ -4,9 +4,17 @@ from interpreters.interpreter.interpreter import Interpreter
 from semantic_analysis.semantic.semantic import Semantic
 
 file = open('library/input.txt', 'r')
+
+print('-' * 80)
+print('Lexical analysis:')
+print('-' * 80)
 lexer = Lexer(file.read())
 tokens = lexer.tokenize()
 
+for i in tokens:
+    i.display()
+
+print('\n')
 print('-' * 80)
 print('Syntax analysis:')
 print('-' * 80)

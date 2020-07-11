@@ -2,7 +2,7 @@ var x, squ;
 
 procedure square;
 begin
-   squ := x + 3;
+   squ := x * x;
 end;
 
 begin
